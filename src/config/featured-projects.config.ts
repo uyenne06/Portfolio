@@ -27,7 +27,12 @@ export type FeaturedProjectConfig = {
   /** Page captured by scripts/capture-previews.ts when the demo's home page is not representative. */
   previewUrl?: string;
   /** Screenshot in /public/projects and where it came from (live demo or the repository itself). */
-  image?: { src: string; source: "demo" | "repository" };
+  image?: {
+    src: string;
+    source: "demo" | "repository";
+    /** Captured by hand (e.g. a screen behind a form); capture-previews.ts leaves it alone. */
+    manual?: boolean;
+  };
   /** Extra repositories linked from the case study (mirrors, preview deployments). */
   relatedRepos?: string[];
   context: ProjectContext;
@@ -64,7 +69,8 @@ export const FEATURED_PROJECTS: readonly FeaturedProjectConfig[] = [
   },
   {
     slug: "meetly",
-    image: { src: "/projects/meetly.jpg", source: "demo" },
+    // "Create New Event" admin form of the live demo, filled in but never submitted.
+    image: { src: "/projects/meetly.jpg", source: "demo", manual: true },
     repo: "HKBDU/Meetly",
     manifests: ["frontend/package.json"],
     context: "hkbdu",

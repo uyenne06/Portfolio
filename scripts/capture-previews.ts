@@ -30,6 +30,10 @@ async function main(): Promise<void> {
   const only = process.argv[2];
   for (const project of FEATURED_PROJECTS.filter((p) => !only || p.slug === only)) {
     const url = project.previewUrl ?? project.demoUrl ?? repos[project.repo]?.homepageUrl;
+    if (project.image?.manual) {
+      console.log(`- ${project.slug}: manual screenshot, skipped`);
+      continue;
+    }
     if (!url) {
       console.log(`- ${project.slug}: no demo URL, skipped`);
       continue;
