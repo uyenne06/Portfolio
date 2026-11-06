@@ -79,22 +79,41 @@ feature components (props only)
 - **Client-side data:** only "Latest public activity" uses TanStack Query, through
   `/api/github/recent` (cached for minutes) so the token never reaches the browser.
 
-## Fig. 1 — the ridgeline
+## Fig. 1 — "Every sheet is one commit" (scroll-driven hero)
 
 `features/hero/services/build-work-timeline.ts` buckets `contributionsCollection.commitContributionsByRepository`
 into weekly commits per featured project (mirrors in `relatedRepos` are excluded; everything else
-becomes "Other repositories"), from the first week with a commit to the snapshot date.
-`HeroSection` localises labels and month ticks, then `WorkTimelineFigure` (client) renders:
+becomes "Other repositories"). `HeroSection` localises labels, then hands the data and the
+server-rendered title block to `shared/components/three/HeroExperience` (client):
 
-- `WorkRidgesScene` — React Three Fiber, loaded with `next/dynamic` (`ssr: false`). Each ridge is an
-  opaque "curtain" (hidden-line removal) plus a drei `Line`; labels are DOM elements positioned each
-  frame by projecting their 3D anchor and writing `left/top` as percentages. Off-screen → `frameloop`
-  `never`; low-power devices → `demand` (still frame, no rise/parallax).
-- `WorkRidgesStill` — the same data as SVG; used for `prefers-reduced-motion`, while WebGL loads and
-  if the WebGL context fails.
+- The hero is a 260dvh section with a sticky full-screen stage; `useScroll` progress (0 → 1) is
+  written to a ref that the WebGL scene reads every frame (no React re-render per scroll event).
+- `CommitFieldScene` (React Three Fiber, `next/dynamic` with `ssr: false`):
+  - `CommitSheets` — one instanced "sheet" per real commit. Each has a start position in a
+    tumbling cloud behind the title and an end position in the chart (x = week, z = project row,
+    y = rank in that week's stack). Sheets are pushed away from the cursor while loose, turn ink
+    when settled; the highlighted project stays pink.
+  - `CommitPoints` — a shader point field of decorative dust that only exists in the cloud.
+  - Row hit areas, faint stratum lines, contact shadows (desktop), camera path from a frontal
+    view of the cloud to an elevated view of the chart, with pointer parallax.
+  - Row and month labels are DOM elements positioned each frame from projected 3D anchors
+    (percent `left/top`, no pixel values).
+- `RidgeLegend` is the accessible interface: hover/focus highlights a project; chips link to
+  `#project-<slug>`.
+- Off-screen → `frameloop="never"`; low-power devices get fewer particles, lower DPR and no
+  shadows; `prefers-reduced-motion` (CSS `motion-reduce:` + JS) collapses the hero to a static
+  title plus `WorkRidgesStill` (the same data as SVG).
 
-The legend under the figure is the accessible interface: hovering/focusing an entry highlights the
-ridge, and each entry links to `#project-<slug>` in Selected work.
+## Motion vocabulary
+
+- **Rise**: hero name on load (`.rise-word`), section titles on scroll (`.reveal-word`).
+- **RevealOnView** sets `data-reveal` (`idle` → `pending` → `done`) only for elements that start
+  below the fold; CSS does the rest: `.clip-reveal` (screenshots), `.heat-cell` (calendar wave).
+- **Kinetic band** (`StackMarquee`): most-used tools, drifting and skewing with scroll velocity.
+- **Cursor** (`CursorFollower`): decorative ring + dot, label over `[data-cursor]`.
+- **Project hover preview**: screenshot follows the cursor and leans with its velocity.
+- **Route curtain** (`PageTransition`): pink curtain on client navigations, never on first load.
+- Everything is disabled or reduced under `prefers-reduced-motion`.
 
 ## Adding a featured project
 
