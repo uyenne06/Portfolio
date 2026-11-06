@@ -189,6 +189,8 @@ type SheetsProps = {
   timeline: RidgeTimeline;
   progress: RefObject<number>;
   activeIndex: number;
+  /** 1 while the visitor holds the mouse button on the hero, else 0. */
+  gather: RefObject<number>;
 };
 
 /**
@@ -196,7 +198,7 @@ type SheetsProps = {
  * fly into place and stack by week on their project's row; settled sheets turn ink, the
  * highlighted project stays pink and the others fade back.
  */
-function CommitSheets({ timeline, progress, activeIndex }: SheetsProps) {
+function CommitSheets({ timeline, progress, activeIndex, gather }: SheetsProps) {
   const colors = useThemeColors();
   const dots = useMemo(() => buildCommitDots(timeline, 0), [timeline]);
   const meshRef = useRef<InstancedMesh>(null);
@@ -207,18 +209,41 @@ function CommitSheets({ timeline, progress, activeIndex }: SheetsProps) {
     accent: new Color(),
     paper: new Color(),
     projected: new Vector3(),
+    attractor: new Vector3(),
+    ray: new Vector3(),
+    gathered: 0,
   });
 
   useFrame((state) => {
     const mesh = meshRef.current;
     if (!mesh) return;
-    const { object, color, ink, accent, paper, projected } = work.current;
+    const scratch = work.current;
+    const { object, color, ink, accent, paper, projected, attractor, ray } = scratch;
     ink.set(colors.ink);
     accent.set(colors.accent);
     paper.set(colors.paper);
     const p = progress.current;
     const time = state.clock.elapsedTime;
     const { start, end, seed, series } = dots;
+
+    // Hold-to-gather: ease towards the button state, and find the cursor's point on the
+    // cloud's depth plane so loose sheets can orbit it.
+    scratch.gathered += ((gather.current ?? 0) - scratch.gathered) * 0.08;
+    const pull = scratch.gathered;
+    if (pull > 0.001) {
+      ray
+        .set(state.pointer.x, state.pointer.y, 0.5)
+        .unproject(state.camera)
+        .sub(state.camera.position)
+        .normalize();
+      const distanceToPlane = (CLOUD_CENTER.z - state.camera.position.z) / (ray.z || -1);
+      attractor.copy(state.camera.position).addScaledVector(ray, distanceToPlane);
+    }
+
+    // A slow "time cursor" sweeps the finished chart from the first week to the last.
+    const left = weekX(0, timeline.weekCount);
+    const right = weekX(timeline.weekCount - 1, timeline.weekCount);
+    const sweepX = left - 1 + ((time * 0.16) % 1.3) * (right - left + 2);
 
     for (let i = 0; i < dots.dataCount; i += 1) {
       const s = seed[i] ?? 0;
@@ -243,8 +268,19 @@ function CommitSheets({ timeline, progress, activeIndex }: SheetsProps) {
       x += Math.sin(time * 0.5 + s * 40) * 0.25 * loose;
       y += Math.cos(time * 0.4 + s * 23) * 0.25 * loose;
 
-      // Push loose sheets away from the cursor (screen space).
-      if (loose > 0.01) {
+      // Gathered sheets spiral around the cursor.
+      if (pull > 0.001 && loose > 0.01) {
+        const orbit = time * (1.6 + s) + s * 12;
+        const radius = 0.2 + s * 1.05;
+        const gx = attractor.x + Math.cos(orbit) * radius;
+        const gy = attractor.y + Math.sin(orbit) * radius * 0.8;
+        const k = pull * loose * 0.96;
+        x += (gx - x) * k;
+        y += (gy - y) * k;
+      }
+
+      // Otherwise, push loose sheets away from the cursor (screen space).
+      if (loose > 0.01 && pull < 0.5) {
         projected.set(x, y, z).project(state.camera);
         const dx = projected.x - state.pointer.x;
         const dy = projected.y - state.pointer.y;
@@ -274,6 +310,10 @@ function CommitSheets({ timeline, progress, activeIndex }: SheetsProps) {
       const settled = Math.min(1, Math.max(0, (e - 0.55) / 0.45));
       color.copy(accent).lerp(ink, highlighted ? 0 : settled);
       if (activeIndex >= 0 && !highlighted) color.lerp(paper, 0.7 * settled);
+      if (activeIndex < 0 && settled > 0) {
+        const glow = Math.max(0, 1 - Math.abs((end[i * 3] ?? 0) - sweepX) / 0.9);
+        color.lerp(accent, glow * glow * 0.9 * settled);
+      }
       mesh.setColorAt(i, color);
     }
     mesh.instanceMatrix.needsUpdate = true;
@@ -449,6 +489,8 @@ function LabelProjector({ timeline, progress, labelRefs, monthRefs }: ProjectorP
 }
 
 export type CommitFieldSceneProps = {
+  /** 1 while the mouse button is held on the hero (gathers the cloud around the cursor). */
+  gather: RefObject<number>;
   timeline: RidgeTimeline;
   /** Scroll progress through the hero, 0 (cloud) → 1 (chart). Read every frame. */
   progress: RefObject<number>;
@@ -465,6 +507,7 @@ export type CommitFieldSceneProps = {
 export default function CommitFieldScene({
   timeline,
   progress,
+  gather,
   activeId,
   dark,
   lowPower,
@@ -496,7 +539,12 @@ export default function CommitFieldScene({
         <ambientLight intensity={dark ? 0.7 : 1.1} />
         <directionalLight position={[4, 9, 7]} intensity={dark ? 1.4 : 1.8} />
         <directionalLight position={[-6, 3, -4]} intensity={0.5} color="#e8a0bf" />
-        <CommitSheets timeline={timeline} progress={progress} activeIndex={activeIndex} />
+        <CommitSheets
+          timeline={timeline}
+          progress={progress}
+          activeIndex={activeIndex}
+          gather={gather}
+        />
         {lowPower ? null : (
           <SettledOnly progress={progress} from={0.6}>
             <ContactShadows

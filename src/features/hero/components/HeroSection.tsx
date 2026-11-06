@@ -122,6 +122,9 @@ export function HeroSection({ location, githubUrl, timeline }: HeroSectionProps)
       figureAlt={t("figureAlt", { count: ridges.series.length, total, period })}
       legendLabel={t("legendLabel")}
       scrollHint={t("scrollHint")}
+      gatherHint={t("gatherHint")}
+      total={total}
+      counterLabel={t("counterLabel", { period })}
     />
   );
 }

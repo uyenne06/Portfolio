@@ -9,7 +9,7 @@ import {
 } from "motion/react";
 import dynamic from "next/dynamic";
 import { useTheme } from "next-themes";
-import { Component, useRef, useState, type ReactNode } from "react";
+import { Component, useRef, useState, type PointerEvent, type ReactNode } from "react";
 
 import { useInView, useLowPowerDevice } from "@/shared/hooks";
 import { cn } from "@/shared/utils";
@@ -42,6 +42,12 @@ type HeroExperienceProps = {
   figureAlt: string;
   legendLabel: string;
   scrollHint: string;
+  /** Hint for the hold-to-gather interaction (fine pointers only). */
+  gatherHint: string;
+  /** Total commits in the figure, counted up in the middle of the scroll. */
+  total: number;
+  /** Label under the big counter, e.g. "commits · Jun – Nov 2026". */
+  counterLabel: string;
 };
 
 function goTo(series: RidgeSeries) {
@@ -60,6 +66,9 @@ export function HeroExperience({
   figureAlt,
   legendLabel,
   scrollHint,
+  gatherHint,
+  total,
+  counterLabel,
 }: HeroExperienceProps) {
   const wrapper = useRef<HTMLElement>(null);
   const reduced = useReducedMotion() ?? false;
@@ -72,6 +81,7 @@ export function HeroExperience({
 
   const { scrollYProgress } = useScroll({ target: wrapper, offset: ["start start", "end end"] });
   const progress = useRef(0);
+  const gather = useRef(0);
   useMotionValueEvent(scrollYProgress, "change", (value) => {
     progress.current = value;
   });
@@ -82,6 +92,21 @@ export function HeroExperience({
   const hintOpacity = useTransform(scrollYProgress, [0, 0.06], [1, 0]);
   const figureOpacity = useTransform(scrollYProgress, [0.7, 0.86], [0, 1]);
   const figureEvents = useTransform(scrollYProgress, (value) => (value > 0.78 ? "auto" : "none"));
+  // Mid-flight: a colossal counter tallies the commits as they fall into place.
+  const counterOpacity = useTransform(scrollYProgress, [0.2, 0.3, 0.56, 0.68], [0, 1, 1, 0]);
+  const counterScale = useTransform(scrollYProgress, [0.2, 0.68], [0.85, 1.12]);
+  const counterValue = useTransform(scrollYProgress, [0.24, 0.6], [0, total], { clamp: true });
+  const counterText = useTransform(counterValue, (value) => Math.round(value).toLocaleString());
+
+  // Hold the mouse button anywhere on the opening scene to gather the commits.
+  const startGather = (event: PointerEvent<HTMLDivElement>) => {
+    if (event.pointerType !== "mouse" || event.button !== 0) return;
+    if ((event.target as HTMLElement).closest("a, button")) return;
+    gather.current = 1;
+  };
+  const stopGather = () => {
+    gather.current = 0;
+  };
 
   return (
     <section
@@ -89,7 +114,12 @@ export function HeroExperience({
       aria-labelledby="hero-heading"
       className="relative h-[260dvh] motion-reduce:h-auto"
     >
-      <div className="sticky top-0 h-dvh overflow-hidden bg-[radial-gradient(ellipse_at_62%_42%,var(--accent-soft),transparent_62%)] motion-reduce:static motion-reduce:h-auto motion-reduce:overflow-visible">
+      <div
+        onPointerDown={startGather}
+        onPointerUp={stopGather}
+        onPointerLeave={stopGather}
+        className="sticky top-0 h-dvh overflow-hidden bg-[radial-gradient(ellipse_at_62%_42%,var(--accent-soft),transparent_62%)] select-none motion-reduce:static motion-reduce:h-auto motion-reduce:overflow-visible"
+      >
         {!reduced && !failed ? (
           <div
             role="img"
@@ -103,6 +133,7 @@ export function HeroExperience({
               <CommitFieldScene
                 timeline={timeline}
                 progress={progress}
+                gather={gather}
                 activeId={activeId}
                 dark={resolvedTheme === "dark"}
                 lowPower={lowPower}
@@ -130,9 +161,21 @@ export function HeroExperience({
           style={reduced ? undefined : { opacity: hintOpacity }}
           className="pointer-events-none absolute bottom-6 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-2 font-mono text-xs text-muted motion-reduce:hidden sm:flex"
         >
+          <span className="hidden text-accent pointer-fine:inline">{gatherHint}</span>
           {scrollHint}
           <span className="h-8 w-px animate-pulse bg-accent-decor" />
         </motion.p>
+
+        <motion.div
+          aria-hidden="true"
+          style={reduced ? undefined : { opacity: counterOpacity, scale: counterScale }}
+          className="pointer-events-none absolute inset-0 z-10 flex flex-col items-center justify-center opacity-0 motion-reduce:hidden"
+        >
+          <motion.span className="font-display text-colossal leading-none font-medium text-outline tabular-nums">
+            {counterText}
+          </motion.span>
+          <span className="mt-2 font-mono text-sm text-muted">{counterLabel}</span>
+        </motion.div>
 
         <motion.div
           style={reduced ? undefined : { opacity: figureOpacity, pointerEvents: figureEvents }}
