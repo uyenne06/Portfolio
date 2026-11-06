@@ -24,6 +24,10 @@ export type FeaturedProjectConfig = {
   manifests: string[];
   /** Overrides the repository homepage when the live demo lives elsewhere. */
   demoUrl?: string;
+  /** Page captured by scripts/capture-previews.ts when the demo's home page is not representative. */
+  previewUrl?: string;
+  /** Screenshot in /public/projects and where it came from (live demo or the repository itself). */
+  image?: { src: string; source: "demo" | "repository" };
   /** Extra repositories linked from the case study (mirrors, preview deployments). */
   relatedRepos?: string[];
   context: ProjectContext;
@@ -34,6 +38,7 @@ export type FeaturedProjectConfig = {
 export const FEATURED_PROJECTS: readonly FeaturedProjectConfig[] = [
   {
     slug: "pegaxus",
+    image: { src: "/projects/pegaxus.jpg", source: "demo" },
     repo: "HKBDU/pegaxus-fe",
     manifests: ["package.json"],
     context: "hkbdu",
@@ -41,6 +46,7 @@ export const FEATURED_PROJECTS: readonly FeaturedProjectConfig[] = [
   },
   {
     slug: "bmt-decor",
+    image: { src: "/projects/bmt-decor.jpg", source: "demo" },
     repo: "hdyui/BMT_FE",
     manifests: ["package.json"],
     relatedRepos: ["uyenne06/BMT-Landing-Page"],
@@ -49,6 +55,7 @@ export const FEATURED_PROJECTS: readonly FeaturedProjectConfig[] = [
   },
   {
     slug: "savico-ai",
+    image: { src: "/projects/savico-ai.jpg", source: "demo" },
     repo: "kat-minh/savico-ai",
     manifests: ["package.json"],
     relatedRepos: ["uyenne06/savico-ai-preview"],
@@ -57,6 +64,7 @@ export const FEATURED_PROJECTS: readonly FeaturedProjectConfig[] = [
   },
   {
     slug: "meetly",
+    image: { src: "/projects/meetly.jpg", source: "demo" },
     repo: "HKBDU/Meetly",
     manifests: ["frontend/package.json"],
     context: "hkbdu",
@@ -66,11 +74,13 @@ export const FEATURED_PROJECTS: readonly FeaturedProjectConfig[] = [
     slug: "ritual-catalog",
     repo: "uyenne06/RitualCatalog",
     manifests: ["package.json"],
+    previewUrl: "https://ritual-catalog-rosy.vercel.app/rituals",
     context: "personal",
     references: ["repo-ritual", "owner-confirmation"],
   },
   {
     slug: "math-util",
+    image: { src: "/projects/math-util.jpg", source: "repository" },
     repo: "uyenne06/math-util",
     manifests: ["pom.xml"],
     context: "personal",

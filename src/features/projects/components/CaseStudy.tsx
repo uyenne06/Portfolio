@@ -6,6 +6,7 @@ import { Cite, Container, Tag } from "@/shared/components/ui";
 
 import type { Project } from "../types";
 import { ProjectLinks } from "./ProjectLinks";
+import { ProjectPlate } from "./ProjectPlate";
 
 function Block({ title, children }: { title: string; children: ReactNode }) {
   return (
@@ -47,11 +48,27 @@ export function CaseStudy({ project }: { project: Project }) {
 
         <header className="mt-10 max-w-4xl">
           <p className="font-mono text-xs text-muted">{t(`context.${project.context}`)}</p>
-          <h1 className="mt-3 font-display text-display font-medium text-balance">{title}</h1>
+          <h1 className="mt-3 font-display text-section font-medium text-balance">{title}</h1>
           <p className="mt-6 max-w-measure font-display text-subtitle text-pretty text-muted">
             {t(`items.${key}.tagline`)}
           </p>
         </header>
+
+        <figure className="mt-12">
+          <ProjectPlate
+            project={project}
+            title={title}
+            sizes="(min-width: 90rem) 88rem, 100vw"
+            priority
+            className="lg:aspect-[21/10]"
+          />
+          {project.image ? (
+            <figcaption className="mt-3 text-sm text-muted">
+              <span className="mr-2 font-mono text-xs text-ink">{tCase("plate")}</span>
+              {tCase(`imageSource.${project.image.source}`)}
+            </figcaption>
+          ) : null}
+        </figure>
 
         <div className="mt-14 grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-x-10">
           <div className="flex max-w-measure flex-col gap-10 lg:col-span-7">
@@ -106,8 +123,8 @@ export function CaseStudy({ project }: { project: Project }) {
               <p className="mt-2 text-sm text-muted">{tCase("stackNote")}</p>
               <ul className="mt-4 flex flex-wrap gap-2">
                 {project.stack.map((tech) => (
-                  <li key={tech}>
-                    <Tag>{tech}</Tag>
+                  <li key={tech.label}>
+                    <Tag>{tech.label}</Tag>
                   </li>
                 ))}
               </ul>

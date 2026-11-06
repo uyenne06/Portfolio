@@ -30,7 +30,8 @@ function toProject(config: FeaturedProjectConfig, repo: RepoData): Project {
     pullRequestsOpened: repo.pullRequestsOpened,
     pullRequestsMerged: repo.pullRequestsMerged,
     languages: languagePercents(repo),
-    stack: technologiesOf(repo).map((tech) => tech.label),
+    stack: technologiesOf(repo),
+    image: config.image ?? null,
     references: config.references,
   };
 }
