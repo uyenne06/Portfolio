@@ -24,6 +24,7 @@ export function TechStackSection({ matrix, number, citations }: TechStackSection
     <Section
       id="methods"
       number={number}
+      wide
       title={tSections("methods")}
       note={
         <p>

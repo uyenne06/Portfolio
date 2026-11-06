@@ -1,5 +1,5 @@
 import type { FeaturedProjectConfig, ProjectContext } from "@/config/featured-projects.config";
-import type { TechGroup } from "@/shared/lib/tech-catalog";
+import type { TechEntry } from "@/shared/lib/tech-catalog";
 
 export type LanguagePercent = { name: string; percent: number };
 
@@ -15,7 +15,7 @@ export type Project = {
   pullRequestsOpened: number;
   pullRequestsMerged: number;
   languages: LanguagePercent[];
-  stack: { label: string; group: TechGroup }[];
+  stack: TechEntry[];
   image: FeaturedProjectConfig["image"] | null;
   references: string[];
 };

@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl";
 
 import type { TechMatrix } from "../types";
-import { TechSpecimen } from "./TechSpecimen";
+import { PeriodicStack } from "./PeriodicStack";
 
 type TechStackFigureProps = {
   matrix: TechMatrix;
@@ -11,14 +11,14 @@ type TechStackFigureProps = {
   projectLabels: Record<string, string>;
 };
 
-/** Client wrapper that supplies formatted (ICU) labels to the interactive specimen. */
+/** Client wrapper that supplies formatted (ICU) labels to the periodic table. */
 export function TechStackFigure({ matrix, projectLabels }: TechStackFigureProps) {
   const t = useTranslations("techStack");
   const total = matrix.columns.length;
   const name = (slug: string) => projectLabels[slug] ?? slug;
 
   return (
-    <TechSpecimen
+    <PeriodicStack
       projects={matrix.columns.map((slug) => ({ id: slug, label: name(slug) }))}
       groups={matrix.groups.map(({ group, rows }) => ({
         id: group,
@@ -28,8 +28,10 @@ export function TechStackFigure({ matrix, projectLabels }: TechStackFigureProps)
       labels={{
         filter: t("filterLabel"),
         all: t("allProjects"),
-        toolCount: (count) => t("toolCount", { count }),
-        usage: (row) =>
+        flip: t("flipHint"),
+        legend: t("legend"),
+        legendSteps: [t("legend5"), t("legend4"), t("legend3"), t("legend2"), t("legend1")],
+        usedIn: (row) =>
           t("usage", {
             tool: row.label,
             count: row.count,

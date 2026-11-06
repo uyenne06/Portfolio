@@ -1,4 +1,4 @@
-import { TECH_GROUP_ORDER, type TechGroup } from "@/shared/lib/tech-catalog";
+import { TECH_GROUP_ORDER, type TechEntry, type TechGroup } from "@/shared/lib/tech-catalog";
 
 import type { StackSource, TechMatrix } from "../types";
 
@@ -8,17 +8,17 @@ import type { StackSource, TechMatrix } from "../types";
  * evidence rather than a wish list.
  */
 export function deriveTechMatrix(projects: readonly StackSource[]): TechMatrix {
-  const groups = new Map<string, TechGroup>();
+  const catalog = new Map<string, TechEntry>();
   for (const project of projects) {
-    for (const tech of project.stack) groups.set(tech.label, tech.group);
+    for (const tech of project.stack) catalog.set(tech.label, tech);
   }
 
   const rowsFor = (group: TechGroup) =>
-    [...groups.entries()]
-      .filter(([, value]) => value === group)
-      .map(([label]) => {
+    [...catalog.values()]
+      .filter((tech) => tech.group === group)
+      .map(({ label, symbol }) => {
         const uses = projects.map((project) => project.stack.some((tech) => tech.label === label));
-        return { label, uses, count: uses.filter(Boolean).length };
+        return { label, symbol, uses, count: uses.filter(Boolean).length };
       })
       .sort((a, b) => b.count - a.count || a.label.localeCompare(b.label));
 
