@@ -9,7 +9,7 @@ import { ActivitySection, getActivitySummary } from "@/features/github-activity"
 import { buildWorkTimeline, HeroSection } from "@/features/hero";
 import { getFeaturedRepos, getProjects, ProjectsSection } from "@/features/projects";
 import { ReferencesSection } from "@/features/references";
-import { deriveTechMatrix, TechStackSection } from "@/features/tech-stack";
+import { deriveTechMatrix, StackMarquee, TechStackSection, topTools } from "@/features/tech-stack";
 import { routing } from "@/i18n/routing";
 import { sectionNumber, type SectionId } from "@/shared/constants/sections";
 import { getGitHubData } from "@/shared/lib/github/github.service";
@@ -25,6 +25,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
   const { data, source } = await getGitHubData();
   const featuredRepos = getFeaturedRepos(data);
   const projects = getProjects(data);
+  const matrix = deriveTechMatrix(projects);
   const stackCitations = [...new Set(projects.flatMap((project) => project.references))].filter(
     (id) => id.startsWith("repo-"),
   );
@@ -37,11 +38,8 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
         timeline={buildWorkTimeline(data)}
       />
       <AboutSection number={numberOf("abstract")} />
-      <TechStackSection
-        matrix={deriveTechMatrix(projects)}
-        number={numberOf("methods")}
-        citations={stackCitations}
-      />
+      <StackMarquee items={topTools(matrix)} />
+      <TechStackSection matrix={matrix} number={numberOf("methods")} citations={stackCitations} />
       <ProjectsSection projects={projects} number={numberOf("work")} />
       <ActivitySection
         summary={getActivitySummary(data, featuredRepos, source)}

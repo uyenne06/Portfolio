@@ -2,7 +2,7 @@ import { ArrowUpRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import { Link } from "@/i18n/navigation";
-import { Cite } from "@/shared/components/ui";
+import { Cite, RevealOnView } from "@/shared/components/ui";
 
 import type { Project } from "../types";
 import { ProjectPlate } from "./ProjectPlate";
@@ -22,10 +22,13 @@ export function ProjectEntry({ project, index }: ProjectEntryProps) {
     <li
       id={`project-${project.slug}`}
       data-preview={project.slug}
+      data-cursor={t("cursorView")}
       className="group anchor-target relative border-b border-rule py-8 lg:py-10"
     >
       {/* Hidden on wide screens, where HoverPreview shows it; lazy images stay unloaded there. */}
-      <ProjectPlate project={project} title={title} sizes="100vw" className="mb-6 lg:hidden" />
+      <RevealOnView className="mb-6 lg:hidden">
+        <ProjectPlate project={project} title={title} sizes="100vw" className="clip-reveal" />
+      </RevealOnView>
 
       <div className="grid grid-cols-1 gap-x-8 gap-y-4 lg:grid-cols-12">
         <p className="font-mono text-sm text-accent lg:col-span-1 lg:pt-3" aria-hidden="true">

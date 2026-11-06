@@ -41,13 +41,14 @@
     "ctaWork": "Read selected work",
     "ctaGithub": "GitHub profile",
     "figureLabel": "Fig. 1",
-    "figureCaption": "Each ridge is one repository and its height is my commits per week, {period}. Hover a ridge or a name to highlight it; select it to jump to the project.",
-    "figureAlt": "Ridgeline chart of weekly commits for {count} projects, {period}. The list below gives each project's total.",
+    "figureCaption": "{total} commits, {period}: arranged by week (left to right) and by project (front to back). Hover a row or a name to highlight a project; select it to jump to it.",
+    "figureAlt": "Chart of {total} commits, {period}: one sheet per commit, stacked by week across {count} project rows. The list of projects gives each total.",
     "availability": "Open to frontend opportunities, team projects and UI collaboration",
-    "figureTitle": "A year of work, by project.",
+    "figureTitle": "Every sheet is one commit.",
     "legendLabel": "Projects in figure 1",
     "otherRepositories": "Other repositories",
-    "seriesDetail": "{count, plural, one {# commit} other {# commits}} · {range}"
+    "seriesDetail": "{count, plural, one {# commit} other {# commits}}",
+    "scrollHint": "Scroll — the commits fall into place"
   },
   "sections": {
     "abstract": "Abstract",
@@ -214,7 +215,8 @@
       }
     },
     "previewAlt": "Screenshot of {title}",
-    "evidence": "Evidence"
+    "evidence": "Evidence",
+    "cursorView": "View"
   },
   "activity": {
     "intro": "Activity over the past twelve months, read from the GitHub API.",

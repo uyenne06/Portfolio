@@ -1,5 +1,8 @@
 import { useFormatter, useTranslations } from "next-intl";
 
+import type { CSSProperties } from "react";
+
+import { RevealOnView } from "@/shared/components/ui";
 import type { ContributionDay } from "@/shared/lib/github";
 
 const CELL = 10;
@@ -21,7 +24,7 @@ export function ContributionHeatmap({ weeks }: { weeks: ContributionDay[][] }) {
   const height = 7 * (CELL + GAP) - GAP;
 
   return (
-    <div>
+    <RevealOnView>
       <svg
         viewBox={`0 0 ${width} ${height}`}
         className="h-auto w-full"
@@ -41,6 +44,8 @@ export function ContributionHeatmap({ weeks }: { weeks: ContributionDay[][] }) {
                 width={CELL}
                 height={CELL}
                 rx={2}
+                className="heat-cell"
+                style={{ "--i": w } as CSSProperties}
                 fill={level === 0 ? "var(--rule)" : "var(--accent-decor)"}
                 fillOpacity={level === 0 ? 1 : LEVEL_OPACITY[level]}
               >
@@ -74,6 +79,6 @@ export function ContributionHeatmap({ weeks }: { weeks: ContributionDay[][] }) {
         ))}
         <span className="ml-1">{t("more")}</span>
       </div>
-    </div>
+    </RevealOnView>
   );
 }

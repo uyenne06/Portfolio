@@ -41,13 +41,14 @@
     "ctaWork": "Xem dự án tiêu biểu",
     "ctaGithub": "Hồ sơ GitHub",
     "figureLabel": "Hình 1",
-    "figureCaption": "Mỗi dải là một repository, độ cao là số commit mỗi tuần của tôi, {period}. Rê chuột vào một dải hoặc một tên để làm nổi bật; chọn để tới dự án đó.",
-    "figureAlt": "Biểu đồ dải núi số commit mỗi tuần của {count} dự án, {period}. Danh sách bên dưới ghi tổng của từng dự án.",
+    "figureCaption": "{total} commit, {period}: xếp theo tuần (trái sang phải) và theo dự án (trước ra sau). Rê chuột vào một hàng hoặc một tên để làm nổi bật dự án; chọn để tới dự án đó.",
+    "figureAlt": "Biểu đồ {total} commit, {period}: mỗi commit là một tờ giấy, xếp chồng theo tuần trên {count} hàng dự án. Danh sách dự án ghi tổng của từng dự án.",
     "availability": "Sẵn sàng cho cơ hội frontend, dự án nhóm và hợp tác giao diện",
-    "figureTitle": "Một năm làm việc, theo từng dự án.",
+    "figureTitle": "Mỗi tờ giấy là một commit.",
     "legendLabel": "Các dự án trong hình 1",
     "otherRepositories": "Repository khác",
-    "seriesDetail": "{count} commit · {range}"
+    "seriesDetail": "{count} commit",
+    "scrollHint": "Cuộn xuống — các commit sẽ về đúng chỗ"
   },
   "sections": {
     "abstract": "Tóm tắt",
@@ -214,7 +215,8 @@
       }
     },
     "previewAlt": "Ảnh chụp màn hình {title}",
-    "evidence": "Số liệu"
+    "evidence": "Số liệu",
+    "cursorView": "Xem"
   },
   "activity": {
     "intro": "Hoạt động trong mười hai tháng qua, đọc từ GitHub API.",

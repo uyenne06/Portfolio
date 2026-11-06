@@ -7,7 +7,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { siteConfig } from "@/config/site.config";
 import { routing } from "@/i18n/routing";
 import { AppProviders } from "@/providers";
-import { SiteFooter, SiteHeader, SkipLink } from "@/shared/components/layout";
+import { CursorFollower, SiteFooter, SiteHeader, SkipLink } from "@/shared/components/layout";
 import { getGitHubData } from "@/shared/lib/github/github.service";
 import { cn } from "@/shared/utils";
 
@@ -98,6 +98,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
               {children}
             </main>
             <SiteFooter year={new Date(data.fetchedAt).getUTCFullYear()} />
+            <CursorFollower />
           </AppProviders>
         </NextIntlClientProvider>
       </body>

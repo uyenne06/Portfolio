@@ -1,6 +1,14 @@
 "use client";
 
-import { AnimatePresence, motion, useMotionValue, useReducedMotion, useSpring } from "motion/react";
+import {
+  AnimatePresence,
+  motion,
+  useMotionValue,
+  useReducedMotion,
+  useSpring,
+  useTransform,
+  useVelocity,
+} from "motion/react";
 import { useState, type PointerEvent, type ReactNode } from "react";
 
 import { useMediaQuery } from "@/shared/hooks";
@@ -24,6 +32,8 @@ export function HoverPreview({ previews, children }: HoverPreviewProps) {
   const y = useMotionValue(0);
   const springX = useSpring(x, { stiffness: 260, damping: 28, mass: 0.6 });
   const springY = useSpring(y, { stiffness: 260, damping: 28, mass: 0.6 });
+  // Lean into the direction of travel, like a card being dragged.
+  const rotate = useTransform(useVelocity(springX), [-1800, 1800], [-9, 9], { clamp: true });
 
   const onPointerMove = (event: PointerEvent<HTMLDivElement>) => {
     if (!enabled) return;
@@ -48,11 +58,12 @@ export function HoverPreview({ previews, children }: HoverPreviewProps) {
             style={{
               x: reduced ? x : springX,
               y: reduced ? y : springY,
+              rotate: reduced ? 0 : rotate,
               translateX: "-110%",
               translateY: "-50%",
             }}
-            initial={{ opacity: 0, scale: 0.92, rotate: -2 }}
-            animate={{ opacity: 1, scale: 1, rotate: 0 }}
+            initial={{ opacity: 0, scale: 0.85 }}
+            animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.96 }}
             transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
           >

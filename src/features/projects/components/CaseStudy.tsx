@@ -2,7 +2,7 @@ import { ArrowLeft } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
-import { Cite, Container, Tag } from "@/shared/components/ui";
+import { Cite, Container, RevealOnView, Tag } from "@/shared/components/ui";
 
 import type { Project } from "../types";
 import { ProjectLinks } from "./ProjectLinks";
@@ -54,13 +54,13 @@ export function CaseStudy({ project }: { project: Project }) {
           </p>
         </header>
 
-        <figure className="mt-12">
+        <RevealOnView as="figure" className="mt-12">
           <ProjectPlate
             project={project}
             title={title}
             sizes="(min-width: 90rem) 88rem, 100vw"
             priority
-            className="lg:aspect-[21/10]"
+            className="clip-reveal lg:aspect-[21/10]"
           />
           {project.image ? (
             <figcaption className="mt-3 text-sm text-muted">
@@ -68,7 +68,7 @@ export function CaseStudy({ project }: { project: Project }) {
               {tCase(`imageSource.${project.image.source}`)}
             </figcaption>
           ) : null}
-        </figure>
+        </RevealOnView>
 
         <div className="mt-14 grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-x-10">
           <div className="flex max-w-measure flex-col gap-10 lg:col-span-7">

@@ -1,3 +1,4 @@
 export { TechStackSection } from "./components/TechStackSection";
-export { deriveTechMatrix } from "./services/derive-tech-stack";
+export { StackMarquee } from "./components/StackMarquee";
+export { deriveTechMatrix, topTools } from "./services/derive-tech-stack";
 export type { TechMatrix } from "./types";

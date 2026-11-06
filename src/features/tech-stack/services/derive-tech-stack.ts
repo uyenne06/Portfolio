@@ -29,3 +29,12 @@ export function deriveTechMatrix(projects: readonly StackSource[]): TechMatrix {
     ),
   };
 }
+
+/** Tools used by at least `min` projects, most-used first (for the kinetic stack band). */
+export function topTools(matrix: TechMatrix, min = 3): string[] {
+  return matrix.groups
+    .flatMap((group) => group.rows)
+    .filter((row) => row.count >= min)
+    .sort((a, b) => b.count - a.count || a.label.localeCompare(b.label))
+    .map((row) => row.label);
+}
