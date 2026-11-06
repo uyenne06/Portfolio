@@ -25,23 +25,24 @@ Without `GITHUB_TOKEN` the site renders from `src/data/github-snapshot.json`.
 
 ## Scripts
 
-| Script                | What it does                                                         |
-| --------------------- | -------------------------------------------------------------------- |
-| `npm run dev`         | Development server                                                   |
-| `npm run build`       | Production build (prerenders `/en`, `/vi` and every case study)      |
-| `npm run start`       | Serve the production build                                           |
-| `npm run lint`        | ESLint (`eslint-config-next`)                                        |
-| `npm run typecheck`   | Generate route types, then `tsc --noEmit`                            |
-| `npm run format`      | Prettier + Tailwind class sorting                                    |
-| `npm run sync:github` | Refresh the committed snapshot from the API (needs `GITHUB_TOKEN`)   |
+| Script                     | What it does                                                             |
+| -------------------------- | ------------------------------------------------------------------------ |
+| `npm run dev`              | Development server                                                       |
+| `npm run build`            | Production build (prerenders `/en`, `/vi` and every case study)          |
+| `npm run start`            | Serve the production build                                               |
+| `npm run lint`             | ESLint (`eslint-config-next`)                                            |
+| `npm run typecheck`        | Generate route types, then `tsc --noEmit`                                |
+| `npm run format`           | Prettier + Tailwind class sorting                                        |
+| `npm run sync:github`      | Refresh the committed snapshot from the API (needs `GITHUB_TOKEN`)       |
+| `npm run capture:previews` | Screenshot each project's live demo into `public/projects/` (Playwright) |
 
 ## Environment variables
 
-| Name                   | Secret | Purpose                                                           |
-| ---------------------- | ------ | ----------------------------------------------------------------- |
-| `GITHUB_TOKEN`         | yes    | Read-only fine-grained token for the GitHub API (server-only)     |
-| `GITHUB_USERNAME`      | no     | Whose data to show (default `uyenne06`)                           |
-| `NEXT_PUBLIC_SITE_URL` | no     | Canonical base URL for metadata, sitemap and Open Graph           |
+| Name                   | Secret | Purpose                                                       |
+| ---------------------- | ------ | ------------------------------------------------------------- |
+| `GITHUB_TOKEN`         | yes    | Read-only fine-grained token for the GitHub API (server-only) |
+| `GITHUB_USERNAME`      | no     | Whose data to show (default `uyenne06`)                       |
+| `NEXT_PUBLIC_SITE_URL` | no     | Canonical base URL for metadata, sitemap and Open Graph       |
 
 ## Documentation
 
