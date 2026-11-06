@@ -1,8 +1,16 @@
+import type { ProjectSlug } from "@/config/featured-projects.config";
 import type { TechGroup } from "@/shared/lib/tech-catalog";
 
-export type TechUsage = { label: string; count: number };
+/** Minimal project shape this feature needs (structurally satisfied by the projects feature). */
+export type StackSource = {
+  slug: ProjectSlug;
+  stack: readonly { label: string; group: TechGroup }[];
+};
 
-export type TechStack = {
-  totalProjects: number;
-  groups: { group: TechGroup; items: TechUsage[] }[];
+export type TechMatrixRow = { label: string; uses: boolean[]; count: number };
+
+export type TechMatrix = {
+  /** Column order = project order. */
+  columns: ProjectSlug[];
+  groups: { group: TechGroup; rows: TechMatrixRow[] }[];
 };

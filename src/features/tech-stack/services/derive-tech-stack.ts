@@ -1,29 +1,31 @@
-import type { RepoData } from "@/shared/lib/github";
-import { technologiesOf, TECH_GROUP_ORDER } from "@/shared/lib/tech-catalog";
+import { TECH_GROUP_ORDER, type TechGroup } from "@/shared/lib/tech-catalog";
 
-import type { TechStack } from "../types";
+import type { StackSource, TechMatrix } from "../types";
 
 /**
- * Counts, per technology, how many featured repositories use it, then groups by layer.
- * Ordered by usage (desc) then name, so the table reads as evidence rather than a wish list.
+ * Technology × project matrix: which featured project declares which tool.
+ * Rows are grouped by layer and ordered by usage (desc) then name, so the figure reads as
+ * evidence rather than a wish list.
  */
-export function deriveTechStack(repos: readonly RepoData[]): TechStack {
-  const usage = new Map<string, { group: TechStack["groups"][number]["group"]; count: number }>();
-
-  for (const repo of repos) {
-    for (const tech of technologiesOf(repo)) {
-      const current = usage.get(tech.label);
-      usage.set(tech.label, { group: tech.group, count: (current?.count ?? 0) + 1 });
-    }
+export function deriveTechMatrix(projects: readonly StackSource[]): TechMatrix {
+  const groups = new Map<string, TechGroup>();
+  for (const project of projects) {
+    for (const tech of project.stack) groups.set(tech.label, tech.group);
   }
 
-  const groups = TECH_GROUP_ORDER.map((group) => ({
-    group,
-    items: [...usage.entries()]
-      .filter(([, value]) => value.group === group)
-      .map(([label, value]) => ({ label, count: value.count }))
-      .sort((a, b) => b.count - a.count || a.label.localeCompare(b.label)),
-  })).filter((entry) => entry.items.length > 0);
+  const rowsFor = (group: TechGroup) =>
+    [...groups.entries()]
+      .filter(([, value]) => value === group)
+      .map(([label]) => {
+        const uses = projects.map((project) => project.stack.some((tech) => tech.label === label));
+        return { label, uses, count: uses.filter(Boolean).length };
+      })
+      .sort((a, b) => b.count - a.count || a.label.localeCompare(b.label));
 
-  return { totalProjects: repos.length, groups };
+  return {
+    columns: projects.map((project) => project.slug),
+    groups: TECH_GROUP_ORDER.map((group) => ({ group, rows: rowsFor(group) })).filter(
+      (entry) => entry.rows.length > 0,
+    ),
+  };
 }

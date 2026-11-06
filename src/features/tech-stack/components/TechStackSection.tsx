@@ -2,60 +2,57 @@ import { useTranslations } from "next-intl";
 
 import { Cite, Figure, Section } from "@/shared/components/ui";
 
-import type { TechStack } from "../types";
-import { UsageDots } from "./UsageDots";
+import type { TechMatrix } from "../types";
+import { TechMatrixTable } from "./TechMatrixTable";
 
 type TechStackSectionProps = {
-  stack: TechStack;
+  matrix: TechMatrix;
   number: string;
   citations: string[];
 };
 
-export function TechStackSection({ stack, number, citations }: TechStackSectionProps) {
+export function TechStackSection({ matrix, number, citations }: TechStackSectionProps) {
   const t = useTranslations("techStack");
   const tSections = useTranslations("sections");
-  const total = stack.totalProjects;
+  const tProjects = useTranslations("projects.items");
+  const total = matrix.columns.length;
+  const singleUse = matrix.groups
+    .flatMap((group) => group.rows)
+    .filter((row) => row.count < 2).length;
 
   return (
-    <Section id="methods" number={number} title={tSections("methods")}>
-      <p className="max-w-measure text-lede text-pretty">
-        {t("intro", { total })}
-        <Cite ids={citations} />
-      </p>
-
-      <Figure className="mt-10" label={t("tableLabel")} caption={t("tableCaption")}>
-        <div className="grid grid-cols-1 items-start gap-x-10 gap-y-8 md:grid-cols-2">
-          {stack.groups.map(({ group, items }) => (
-            <table key={group} className="w-full border-collapse text-left text-sm">
-              <caption className="border-b border-ink pb-2 text-left font-display text-subtitle font-medium">
-                {t(`groups.${group}`)}
-              </caption>
-              <thead className="sr-only">
-                <tr>
-                  <th scope="col">{t("colTool")}</th>
-                  <th scope="col">{t("colProjects")}</th>
-                </tr>
-              </thead>
-              <tbody>
-                {items.map((item) => (
-                  <tr key={item.label} className="border-b border-rule">
-                    <th scope="row" className="py-2.5 pr-4 font-normal">
-                      {item.label}
-                    </th>
-                    <td className="py-2.5 text-right whitespace-nowrap">
-                      <span className="inline-flex items-center gap-3">
-                        <UsageDots count={item.count} total={total} />
-                        <span className="w-12 font-mono text-xs text-muted tabular-nums">
-                          {t("usage", { count: item.count, total })}
-                        </span>
-                      </span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          ))}
-        </div>
+    <Section
+      id="methods"
+      number={number}
+      title={tSections("methods")}
+      note={
+        <p>
+          {t("intro", { total })}
+          <Cite ids={citations} />
+        </p>
+      }
+    >
+      <Figure label={t("tableLabel")} caption={t("tableCaption")}>
+        <TechMatrixTable
+          columns={matrix.columns.map((slug) => ({
+            id: slug,
+            label: tProjects(`${slug}.title`),
+            href: `#project-${slug}`,
+          }))}
+          groups={matrix.groups.map(({ group, rows }) => ({
+            id: group,
+            label: t(`groups.${group}`),
+            rows,
+          }))}
+          labels={{
+            tool: t("colTool"),
+            total: t("colTotal"),
+            used: t("used"),
+            unused: t("unused"),
+            showAll: t("showAll", { count: singleUse }),
+            showFewer: t("showFewer"),
+          }}
+        />
       </Figure>
     </Section>
   );
