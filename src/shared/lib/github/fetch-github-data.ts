@@ -107,6 +107,13 @@ function normaliseContributions(user: UserNode): GitHubData["contributions"] {
     pullRequests: collection.totalPullRequestContributions,
     issues: collection.totalIssueContributions,
     reviews: collection.totalPullRequestReviewContributions,
+    byRepository: collection.commitContributionsByRepository.map((entry) => ({
+      repo: entry.repository.nameWithOwner,
+      days: entry.contributions.nodes.map((node) => ({
+        date: node.occurredAt.slice(0, 10),
+        count: node.commitCount,
+      })),
+    })),
     weeks: collection.contributionCalendar.weeks.map((week) =>
       week.contributionDays.map((day) => ({ date: day.date, count: day.contributionCount })),
     ),

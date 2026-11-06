@@ -58,6 +58,8 @@ export const githubDataSchema = z.object({
     pullRequests: z.number().int().nonnegative(),
     issues: z.number().int().nonnegative(),
     reviews: z.number().int().nonnegative(),
+    /** Commits per day for each repository the user committed to (last 12 months). */
+    byRepository: z.array(z.object({ repo: z.string(), days: z.array(contributionDaySchema) })),
     /** One array per week, each holding up to 7 days (Sunday first). */
     weeks: z.array(z.array(contributionDaySchema)),
   }),

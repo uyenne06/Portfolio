@@ -28,6 +28,10 @@ const USER_FIELDS = /* GraphQL */ `
     totalPullRequestContributions
     totalIssueContributions
     totalPullRequestReviewContributions
+    commitContributionsByRepository(maxRepositories: 25) {
+      repository { nameWithOwner }
+      contributions(first: 100) { nodes { occurredAt commitCount } }
+    }
     contributionCalendar {
       totalContributions
       weeks { contributionDays { date contributionCount } }

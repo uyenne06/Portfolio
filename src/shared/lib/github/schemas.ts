@@ -25,6 +25,14 @@ export const userNodeSchema = z.object({
     totalPullRequestContributions: z.number(),
     totalIssueContributions: z.number(),
     totalPullRequestReviewContributions: z.number(),
+    commitContributionsByRepository: z.array(
+      z.object({
+        repository: z.object({ nameWithOwner: z.string() }),
+        contributions: z.object({
+          nodes: z.array(z.object({ occurredAt: z.string(), commitCount: z.number() })),
+        }),
+      }),
+    ),
     contributionCalendar: z.object({
       totalContributions: z.number(),
       weeks: z.array(
