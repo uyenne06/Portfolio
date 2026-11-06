@@ -1,11 +1,11 @@
 import { useFormatter, useTranslations } from "next-intl";
-import type { CSSProperties } from "react";
 
 import type { RidgeTimeline } from "@/shared/components/three";
 import { HeroExperience } from "@/shared/components/three";
 import { BrandIcon, ButtonLink, Cite, Container } from "@/shared/components/ui";
 
 import type { WorkTimeline } from "../types";
+import { ProximityTitle } from "./ProximityTitle";
 
 type HeroSectionProps = {
   location: string | null;
@@ -66,16 +66,11 @@ export function HeroSection({ location, githubUrl, timeline }: HeroSectionProps)
         <p>{t("availability")}</p>
       </div>
 
-      <h1 id="hero-heading" className="mt-6 font-display text-display font-medium text-balance">
-        {words.map((word, index) => (
-          <span key={`${word}-${index}`}>
-            <span className="rise-word">
-              <span style={{ "--rise-index": index } as CSSProperties}>{word}</span>
-            </span>
-            {index < words.length - 1 ? " " : null}
-          </span>
-        ))}
-      </h1>
+      <ProximityTitle
+        id="hero-heading"
+        words={words}
+        className="mt-6 font-display text-display font-medium text-balance"
+      />
 
       <div className="mt-8 grid grid-cols-1 gap-8 border-t border-ink/20 pt-6 lg:grid-cols-12 lg:gap-x-10">
         <p className="font-display text-lede text-pretty lg:col-span-6">

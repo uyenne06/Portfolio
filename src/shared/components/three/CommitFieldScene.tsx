@@ -23,6 +23,9 @@ import { buildCommitDots, FIELD, weekX } from "./commit-dots";
 import type { RidgeSeries, RidgeTimeline } from "./types";
 import { useThemeColors } from "./useThemeColors";
 
+/** Centre of the opening cloud (matches the offsets in commit-dots.ts). */
+const CLOUD_CENTER = { x: 2, y: 1.4, z: -4 } as const;
+
 /** Scroll progress at which the chart is fully formed and becomes interactive. */
 const SETTLED = 0.82;
 
@@ -223,9 +226,20 @@ function CommitSheets({ timeline, progress, activeIndex }: SheetsProps) {
       const e = local * local * (3 - 2 * local);
       const loose = 1 - e;
 
-      let x = (start[i * 3] ?? 0) * loose + (end[i * 3] ?? 0) * e;
-      let y = (start[i * 3 + 1] ?? 0) * loose + (end[i * 3 + 1] ?? 0) * e;
-      const z = (start[i * 3 + 2] ?? 0) * loose + (end[i * 3 + 2] ?? 0) * e;
+      // Cloud position: bursts out of the cloud's centre on load, then swirls slowly.
+      const angle = time * 0.06 + s * 0.4;
+      const cos = Math.cos(angle);
+      const sin = Math.sin(angle);
+      const ox = (start[i * 3] ?? 0) - CLOUD_CENTER.x;
+      const oz = (start[i * 3 + 2] ?? 0) - CLOUD_CENTER.z;
+      const burst = 1 - Math.pow(1 - Math.min(1, time / (1.4 + s * 0.6)), 4);
+      const cloudX = CLOUD_CENTER.x + (ox * cos - oz * sin) * burst;
+      const cloudY = CLOUD_CENTER.y + ((start[i * 3 + 1] ?? 0) - CLOUD_CENTER.y) * burst;
+      const cloudZ = CLOUD_CENTER.z + (ox * sin + oz * cos) * burst;
+
+      let x = cloudX * loose + (end[i * 3] ?? 0) * e;
+      let y = cloudY * loose + (end[i * 3 + 1] ?? 0) * e;
+      const z = cloudZ * loose + (end[i * 3 + 2] ?? 0) * e;
       x += Math.sin(time * 0.5 + s * 40) * 0.25 * loose;
       y += Math.cos(time * 0.4 + s * 23) * 0.25 * loose;
 
@@ -243,10 +257,12 @@ function CommitSheets({ timeline, progress, activeIndex }: SheetsProps) {
       }
 
       object.position.set(x, y, z);
+      // Sheets spin fast while bursting out, then settle into a lazy tumble.
+      const spin = time * (0.6 + (1 - burst) * 3);
       object.rotation.set(
-        (s * 6 + time * 0.6) * loose,
-        (s * 9 + time * 0.4) * loose,
-        (s * 3 + time * 0.5) * loose,
+        (s * 6 + spin) * loose,
+        (s * 9 + spin * 0.7) * loose,
+        (s * 3 + spin * 0.8) * loose,
       );
       const scale = 1 + loose * 0.3;
       object.scale.set(scale, scale, scale);
