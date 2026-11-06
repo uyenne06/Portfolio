@@ -4,16 +4,19 @@ import { Link } from "@/i18n/navigation";
 import { SECTIONS } from "@/shared/constants/sections";
 
 import { LocaleSwitcher } from "./LocaleSwitcher";
-import { MobileNav, type NavItem } from "./MobileNav";
+import { MobileNav } from "./MobileNav";
+import { ScrollProgress } from "./ScrollProgress";
+import { SectionNav } from "./SectionNav";
 import { ThemeToggle } from "./ThemeToggle";
 
-/** Sticky masthead: name, section contents, language and theme controls. */
+/** Sticky masthead: name, section contents, language and theme controls, reading progress. */
 export function SiteHeader({ name }: { name: string }) {
   const t = useTranslations("nav");
   const locale = useLocale();
 
   // Absolute anchors so the contents also work from the case-study pages.
-  const items: NavItem[] = SECTIONS.map((section) => ({
+  const items = SECTIONS.map((section) => ({
+    id: section.id,
     href: `/${locale}#${section.id}`,
     label: t(section.id),
     number: section.number,
@@ -30,20 +33,7 @@ export function SiteHeader({ name }: { name: string }) {
           {name}
         </Link>
 
-        <nav aria-label={t("primary")} className="hidden lg:block">
-          <ol className="flex items-center gap-7 text-sm">
-            {items.map((item) => (
-              <li key={item.href}>
-                <a href={item.href} className="group inline-flex items-baseline gap-1.5 py-2">
-                  <span className="font-mono text-xs text-accent">{item.number}</span>
-                  <span className="text-muted transition-colors group-hover:text-ink">
-                    {item.label}
-                  </span>
-                </a>
-              </li>
-            ))}
-          </ol>
-        </nav>
+        <SectionNav items={items} label={t("primary")} />
 
         <div className="flex shrink-0 items-center">
           <LocaleSwitcher />
@@ -51,6 +41,7 @@ export function SiteHeader({ name }: { name: string }) {
           <MobileNav items={items} openLabel={t("menu")} closeLabel={t("menuClose")} />
         </div>
       </div>
+      <ScrollProgress />
     </header>
   );
 }

@@ -40,10 +40,14 @@
     "affiliationWork": "Thực tập sinh Frontend, VNZ Company — từ tháng 6/2026",
     "ctaWork": "Xem dự án tiêu biểu",
     "ctaGithub": "Hồ sơ GitHub",
-    "ctaContact": "Gửi thư cho tôi",
     "figureLabel": "Hình 1",
-    "figureCaption": "Địa hình đóng góp. Mỗi dải là một ngày trong tuần, mỗi đỉnh là một ngày trong mười hai tháng qua; độ cao theo số đóng góp trên GitHub của ngày đó (tổng cộng {total}).",
-    "figureAlt": "Địa hình khung dây của {total} đóng góp GitHub trong năm qua, mỗi dải ứng với một ngày trong tuần."
+    "figureCaption": "Mỗi dải là một repository, độ cao là số commit mỗi tuần của tôi, {period}. Rê chuột vào một dải hoặc một tên để làm nổi bật; chọn để tới dự án đó.",
+    "figureAlt": "Biểu đồ dải núi số commit mỗi tuần của {count} dự án, {period}. Danh sách bên dưới ghi tổng của từng dự án.",
+    "availability": "Sẵn sàng cho cơ hội frontend, dự án nhóm và hợp tác giao diện",
+    "figureTitle": "Một năm làm việc, theo từng dự án.",
+    "legendLabel": "Các dự án trong hình 1",
+    "otherRepositories": "Repository khác",
+    "seriesDetail": "{count} commit · {range}"
   },
   "sections": {
     "abstract": "Tóm tắt",
@@ -71,19 +75,22 @@
     ]
   },
   "techStack": {
-    "intro": "Công nghệ được đếm, không tự khai. Mỗi dòng cho biết bao nhiêu trong {total} dự án tiêu biểu khai báo công cụ đó trong file phụ thuộc (package.json, pom.xml) hoặc dùng nó làm ngôn ngữ của repository.",
-    "tableLabel": "Bảng 1",
-    "tableCaption": "Công cụ theo từng tầng, sắp xếp theo số dự án tiêu biểu sử dụng.",
+    "intro": "Công nghệ được đếm, không tự khai: một chấm nghĩa là dự án khai báo công cụ đó trong file phụ thuộc (package.json, pom.xml) hoặc dùng nó làm ngôn ngữ của repository. Tổng cộng {total} dự án.",
+    "tableLabel": "Hình 2",
+    "tableCaption": "Công cụ theo từng dự án. Rê chuột vào tên dự án để dò theo cột.",
     "colTool": "Công cụ",
-    "colProjects": "Dự án",
-    "usage": "{count} / {total}",
     "groups": {
       "frontend": "Frontend",
       "styling": "Giao diện & styling",
       "data": "State & dữ liệu",
       "backend": "Backend",
       "tooling": "Công cụ & kiểm thử"
-    }
+    },
+    "colTotal": "Dự án",
+    "used": "có dùng",
+    "unused": "không dùng",
+    "showAll": "Xem thêm {count} công cụ chỉ dùng trong một dự án",
+    "showFewer": "Thu gọn"
   },
   "projects": {
     "intro": "Các dự án tôi có commit, sắp xếp theo số commit của tôi trên nhánh mặc định của từng repository.",
@@ -199,8 +206,15 @@
       "languages": "Ngôn ngữ theo dung lượng",
       "links": "Liên kết",
       "related": "Repository liên quan",
-      "sources": "Nguồn"
-    }
+      "sources": "Nguồn",
+      "plate": "Ảnh",
+      "imageSource": {
+        "demo": "Ảnh chụp bản demo đang chạy.",
+        "repository": "Ảnh chụp được đăng trong repository."
+      }
+    },
+    "previewAlt": "Ảnh chụp màn hình {title}",
+    "evidence": "Số liệu"
   },
   "activity": {
     "intro": "Hoạt động trong mười hai tháng qua, đọc từ GitHub API.",
@@ -211,7 +225,7 @@
       "issues": "Issue",
       "reviews": "Review"
     },
-    "languagesLabel": "Hình 2",
+    "languagesLabel": "Hình 4",
     "languagesCaption": "Tỉ lệ ngôn ngữ trên các repository tiêu biểu, tính theo dung lượng code.",
     "calendarLabel": "Hình 3",
     "calendarCaption": "Số đóng góp mỗi ngày; ô càng đậm, đóng góp càng nhiều.",
@@ -239,7 +253,9 @@
     "linkedin": "LinkedIn",
     "instagram": "Instagram",
     "facebook": "Facebook",
-    "location": "Đang ở {location} (UTC+7)."
+    "location": "Đang ở {location} (UTC+7).",
+    "copy": "Sao chép email",
+    "copied": "Đã sao chép"
   },
   "references": {
     "intro": "Mỗi con số trong ngoặc vuông trên trang này trỏ tới một trong các nguồn sau."

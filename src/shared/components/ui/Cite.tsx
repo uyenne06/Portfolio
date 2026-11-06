@@ -9,7 +9,7 @@ export function Cite({ ids }: { ids: readonly string[] }) {
   const numbers = [...new Set(ids.map(referenceNumber))].sort((a, b) => a - b);
 
   return (
-    <sup className="ml-0.5 font-mono text-[0.7em] leading-none font-normal tracking-normal">
+    <sup className="relative z-10 ml-0.5 font-mono text-[0.7em] leading-none font-normal tracking-normal">
       [
       {numbers.map((n, index) => (
         <span key={n}>

@@ -6,13 +6,12 @@ import { siteConfig } from "@/config/site.config";
 import { AboutSection } from "@/features/about";
 import { ContactSection, getContactChannels } from "@/features/contact";
 import { ActivitySection, getActivitySummary } from "@/features/github-activity";
-import { HeroSection } from "@/features/hero";
+import { buildWorkTimeline, HeroSection } from "@/features/hero";
 import { getFeaturedRepos, getProjects, ProjectsSection } from "@/features/projects";
 import { ReferencesSection } from "@/features/references";
-import { deriveTechStack, TechStackSection } from "@/features/tech-stack";
+import { deriveTechMatrix, TechStackSection } from "@/features/tech-stack";
 import { routing } from "@/i18n/routing";
 import { sectionNumber, type SectionId } from "@/shared/constants/sections";
-import { toContributionHeights } from "@/shared/components/three";
 import { getGitHubData } from "@/shared/lib/github/github.service";
 
 const numberOf = (id: SectionId) => sectionNumber(id) ?? "";
@@ -35,12 +34,11 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
       <HeroSection
         location={data.profile.location}
         githubUrl={data.profile.url}
-        totalContributions={data.contributions.total}
-        heights={toContributionHeights(data.contributions.weeks)}
+        timeline={buildWorkTimeline(data)}
       />
       <AboutSection number={numberOf("abstract")} />
       <TechStackSection
-        stack={deriveTechStack(featuredRepos)}
+        matrix={deriveTechMatrix(projects)}
         number={numberOf("methods")}
         citations={stackCitations}
       />

@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import { BrandIcon, Cite, Section } from "@/shared/components/ui";
 
 import type { ContactChannel } from "../services/get-contact-channels";
+import { CopyEmailButton } from "./CopyEmailButton";
 
 type ContactSectionProps = {
   channels: ContactChannel[];
@@ -22,25 +23,40 @@ export function ContactSection({ channels, location, number }: ContactSectionPro
   const [primary, ...others] = channels;
 
   return (
-    <Section id="correspondence" number={number} title={tSections("correspondence")}>
-      <p className="max-w-measure text-lede text-pretty">
-        {t("intro")}
-        <Cite ids={["profile-readme"]} />
-      </p>
-
-      {primary?.kind === "email" ? (
-        <p className="mt-10">
-          <a
-            href={primary.href}
-            className="font-display text-title font-medium break-all decoration-accent-decor decoration-2 underline-offset-8 hover:text-accent hover:underline"
-          >
-            {primary.handle}
-          </a>
-          <Cite ids={[primary.reference]} />
+    <Section
+      id="correspondence"
+      number={number}
+      title={tSections("correspondence")}
+      note={
+        <p>
+          {t("intro")}
+          <Cite ids={["profile-readme"]} />
         </p>
+      }
+    >
+      {primary?.kind === "email" ? (
+        <div>
+          <p className="font-mono text-xs text-muted">{t("email")}</p>
+          <p className="mt-3">
+            <a
+              href={primary.href}
+              className="font-display text-plate font-medium break-all decoration-accent-decor decoration-[0.06em] underline-offset-[0.15em] hover:text-accent hover:underline"
+            >
+              {primary.handle}
+            </a>
+            <Cite ids={[primary.reference]} />
+          </p>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <CopyEmailButton
+              email={primary.handle}
+              copyLabel={t("copy")}
+              copiedLabel={t("copied")}
+            />
+          </div>
+        </div>
       ) : null}
 
-      <ul className="mt-10 grid grid-cols-1 gap-x-10 border-t border-ink sm:grid-cols-2">
+      <ul className="mt-14 grid grid-cols-1 gap-x-10 border-t border-ink sm:grid-cols-2">
         {(primary?.kind === "email" ? others : channels).map((channel) => (
           <li key={channel.href} className="min-w-0 border-b border-rule">
             <a

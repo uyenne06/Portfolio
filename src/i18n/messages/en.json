@@ -40,10 +40,14 @@
     "affiliationWork": "Frontend Developer Intern, VNZ Company — since June 2026",
     "ctaWork": "Read selected work",
     "ctaGithub": "GitHub profile",
-    "ctaContact": "Write to me",
     "figureLabel": "Fig. 1",
-    "figureCaption": "Contribution terrain. Each ridge is a weekday and each vertex a day of the past twelve months; height follows the number of GitHub contributions that day ({total} in total).",
-    "figureAlt": "Wireframe terrain of {total} GitHub contributions over the past year, one ridge per weekday."
+    "figureCaption": "Each ridge is one repository and its height is my commits per week, {period}. Hover a ridge or a name to highlight it; select it to jump to the project.",
+    "figureAlt": "Ridgeline chart of weekly commits for {count} projects, {period}. The list below gives each project's total.",
+    "availability": "Open to frontend opportunities, team projects and UI collaboration",
+    "figureTitle": "A year of work, by project.",
+    "legendLabel": "Projects in figure 1",
+    "otherRepositories": "Other repositories",
+    "seriesDetail": "{count, plural, one {# commit} other {# commits}} · {range}"
   },
   "sections": {
     "abstract": "Abstract",
@@ -71,19 +75,22 @@
     ]
   },
   "techStack": {
-    "intro": "Technologies are counted, not claimed. Each row shows how many of the {total} featured projects declare the tool in a dependency manifest (package.json, pom.xml) or use it as a repository language.",
-    "tableLabel": "Table 1",
-    "tableCaption": "Tools grouped by layer, ordered by the number of featured projects that use them.",
+    "intro": "Technologies are counted, not claimed: a dot means the project declares the tool in its dependency manifest (package.json, pom.xml) or uses it as a repository language. {total} projects in total.",
+    "tableLabel": "Fig. 2",
+    "tableCaption": "Tools by project. Hover a project name to follow its column.",
     "colTool": "Tool",
-    "colProjects": "Projects",
-    "usage": "{count} of {total}",
     "groups": {
       "frontend": "Frontend",
       "styling": "Styling & UI",
       "data": "State & data",
       "backend": "Backend",
       "tooling": "Tooling & testing"
-    }
+    },
+    "colTotal": "Projects",
+    "used": "used",
+    "unused": "not used",
+    "showAll": "Show {count} tools used in only one project",
+    "showFewer": "Show fewer tools"
   },
   "projects": {
     "intro": "Projects I have committed to, ordered by the number of my commits on each repository's default branch.",
@@ -199,8 +206,15 @@
       "languages": "Languages by size",
       "links": "Links",
       "related": "Related repository",
-      "sources": "Sources"
-    }
+      "sources": "Sources",
+      "plate": "Plate",
+      "imageSource": {
+        "demo": "Screenshot of the live demo.",
+        "repository": "Screenshot published in the repository."
+      }
+    },
+    "previewAlt": "Screenshot of {title}",
+    "evidence": "Evidence"
   },
   "activity": {
     "intro": "Activity over the past twelve months, read from the GitHub API.",
@@ -211,7 +225,7 @@
       "issues": "Issues",
       "reviews": "Reviews"
     },
-    "languagesLabel": "Fig. 2",
+    "languagesLabel": "Fig. 4",
     "languagesCaption": "Language share across the featured repositories, by bytes of code.",
     "calendarLabel": "Fig. 3",
     "calendarCaption": "Contributions per day; darker cells mean more contributions.",
@@ -239,7 +253,9 @@
     "linkedin": "LinkedIn",
     "instagram": "Instagram",
     "facebook": "Facebook",
-    "location": "Based in {location} (UTC+7)."
+    "location": "Based in {location} (UTC+7).",
+    "copy": "Copy email",
+    "copied": "Copied"
   },
   "references": {
     "intro": "Every bracketed number on this page points to one of these sources."
