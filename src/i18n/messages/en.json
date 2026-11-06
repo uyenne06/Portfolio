@@ -48,7 +48,9 @@
     "legendLabel": "Projects in figure 1",
     "otherRepositories": "Other repositories",
     "seriesDetail": "{count, plural, one {# commit} other {# commits}}",
-    "scrollHint": "Scroll — the commits fall into place"
+    "scrollHint": "Scroll — the commits fall into place",
+    "gatherHint": "Press and hold to gather the commits",
+    "counterLabel": "commits · {period}"
   },
   "sections": {
     "abstract": "Abstract",
@@ -78,7 +80,7 @@
   "techStack": {
     "intro": "Technologies are counted, not claimed: a tool appears when a project declares it in its dependency manifest (package.json, pom.xml) or uses it as a repository language. {total} projects in total.",
     "tableLabel": "Fig. 2",
-    "tableCaption": "The stack as a type specimen: the bigger the word, the more projects use it (the small number is the count). Pick a project to see its stack; point at a tool to see which projects use it.",
+    "tableCaption": "The periodic table of my stack. Each layer is a block; the atomic number is a tool's rank by usage, the corner fraction and the shading show how many of the projects use it. Select an element to flip it; pick a project to light up its stack.",
     "groups": {
       "frontend": "Frontend",
       "styling": "Styling & UI",
@@ -88,8 +90,14 @@
     },
     "filterLabel": "Stack of",
     "allProjects": "All projects",
-    "toolCount": "{count, plural, one {# tool} other {# tools}}",
-    "usage": "{tool}: used in {count} of {total} projects ({projects})"
+    "usage": "{tool}: used in {count} of {total} projects ({projects})",
+    "flipHint": "Select to flip",
+    "legend": "Used in",
+    "legend5": "5–6 projects",
+    "legend4": "4",
+    "legend3": "3",
+    "legend2": "2",
+    "legend1": "1 project"
   },
   "projects": {
     "intro": "Projects I have committed to, ordered by the number of my commits on each repository's default branch.",

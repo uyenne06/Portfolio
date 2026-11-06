@@ -104,6 +104,22 @@ server-rendered title block to `shared/components/three/HeroExperience` (client)
   shadows; `prefers-reduced-motion` (CSS `motion-reduce:` + JS) collapses the hero to a static
   title plus `WorkRidgesStill` (the same data as SVG).
 
+## Fig. 2 — the periodic table of the stack
+
+`features/tech-stack` derives a tool × project matrix from the dependency manifests
+(`deriveTechMatrix`). `PeriodicStack` lays each layer out as a block of "elements"
+(`ElementTile`): two-letter symbols come from `shared/lib/tech-catalog.ts`, the atomic number is
+the usage rank, and the shading (solid → soft → hatched → outline → dashed) encodes how many
+projects use the tool. Tiles tilt toward the cursor with a glare, flip to list their projects, and
+cross-highlight with the project chips.
+
+## Hero interactions
+
+Besides the scroll morph: a burst-in on load, a slowly swirling cloud, hold-to-gather (mouse
+button held on the stage pulls loose sheets into an orbit around the cursor), a colossal counter
+mid-scroll, and a "time cursor" glow that sweeps the settled chart. The title's letters lift and
+blush near the cursor (`ProximityTitle`, transforms only).
+
 ## Motion vocabulary
 
 - **Rise**: hero name on load (`.rise-word`), section titles on scroll (`.reveal-word`).

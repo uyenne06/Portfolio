@@ -77,6 +77,9 @@
   --text-subtitle--line-height: 1.25;
   --text-lede: clamp(1.1875rem, 1.05rem + 0.6vw, 1.5rem);
   --text-lede--line-height: 1.55;
+  --text-colossal: clamp(7rem, 3rem + 18vw, 22rem);
+  --text-colossal--line-height: 0.85;
+  --text-colossal--letter-spacing: -0.04em;
   --text-figure: clamp(2.75rem, 1.8rem + 3.6vw, 5.5rem);
   --text-figure--line-height: 1;
 
@@ -257,6 +260,29 @@
     background-color: transparent;
     box-shadow: 0 0 0 1.6rem transparent;
   }
+}
+
+/* Periodic table: hatched shading (like a printed chart) and tiles flipping into place. */
+.hatch {
+  background-color: var(--paper);
+  background-image: repeating-linear-gradient(
+    135deg,
+    var(--accent-soft) 0 0.3rem,
+    transparent 0.3rem 0.6rem
+  );
+}
+
+.tile-in {
+  transition:
+    opacity 0.7s var(--ease-paper),
+    transform 0.9s var(--ease-paper),
+    filter 0.5s var(--ease-paper);
+  transition-delay: calc(var(--i, 0) * 28ms);
+}
+
+[data-reveal="pending"] .tile-in {
+  opacity: 0;
+  transform: translateY(2rem) rotateX(-80deg);
 }
 
 /* Outlined display type for the kinetic stack band. */
