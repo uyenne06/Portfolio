@@ -3,7 +3,7 @@ import { useTranslations } from "next-intl";
 import { Cite, Figure, Section } from "@/shared/components/ui";
 
 import type { TechMatrix } from "../types";
-import { TechMatrixTable } from "./TechMatrixTable";
+import { TechStackFigure } from "./TechStackFigure";
 
 type TechStackSectionProps = {
   matrix: TechMatrix;
@@ -16,9 +16,9 @@ export function TechStackSection({ matrix, number, citations }: TechStackSection
   const tSections = useTranslations("sections");
   const tProjects = useTranslations("projects.items");
   const total = matrix.columns.length;
-  const singleUse = matrix.groups
-    .flatMap((group) => group.rows)
-    .filter((row) => row.count < 2).length;
+  const projectLabels = Object.fromEntries(
+    matrix.columns.map((slug) => [slug, tProjects(`${slug}.title`)]),
+  );
 
   return (
     <Section
@@ -33,26 +33,7 @@ export function TechStackSection({ matrix, number, citations }: TechStackSection
       }
     >
       <Figure label={t("tableLabel")} caption={t("tableCaption")}>
-        <TechMatrixTable
-          columns={matrix.columns.map((slug) => ({
-            id: slug,
-            label: tProjects(`${slug}.title`),
-            href: `#project-${slug}`,
-          }))}
-          groups={matrix.groups.map(({ group, rows }) => ({
-            id: group,
-            label: t(`groups.${group}`),
-            rows,
-          }))}
-          labels={{
-            tool: t("colTool"),
-            total: t("colTotal"),
-            used: t("used"),
-            unused: t("unused"),
-            showAll: t("showAll", { count: singleUse }),
-            showFewer: t("showFewer"),
-          }}
-        />
+        <TechStackFigure matrix={matrix} projectLabels={projectLabels} />
       </Figure>
     </Section>
   );
