@@ -1,8 +1,9 @@
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 
 import { cn } from "@/shared/utils";
 
 import { Container } from "./Container";
+import { RevealOnView } from "./RevealOnView";
 
 type SectionProps = {
   id: string;
@@ -28,12 +29,20 @@ export function Section({ id, title, number, note, children, className }: Sectio
           <p className="font-mono text-sm text-accent lg:col-span-3 lg:pt-3" aria-hidden="true">
             {number ? `§ ${number}` : "§"}
           </p>
-          <h2
+          <RevealOnView
+            as="h2"
             id={headingId}
             className="font-display text-section font-medium text-balance lg:col-span-9"
           >
-            {title}
-          </h2>
+            {title.split(" ").map((word, index, words) => (
+              <span key={`${word}-${index}`}>
+                <span className="reveal-word">
+                  <span style={{ "--rise-index": index } as CSSProperties}>{word}</span>
+                </span>
+                {index < words.length - 1 ? " " : null}
+              </span>
+            ))}
+          </RevealOnView>
         </header>
 
         <div className="mt-10 grid grid-cols-1 gap-x-10 gap-y-8 lg:mt-16 lg:grid-cols-12">

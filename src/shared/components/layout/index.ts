@@ -1,3 +1,4 @@
+export { CursorFollower } from "./CursorFollower";
 export { PageTransition } from "./PageTransition";
 export { SiteFooter } from "./SiteFooter";
 export { SiteHeader } from "./SiteHeader";

@@ -5,5 +5,6 @@ export { Container } from "./Container";
 export { CountUp } from "./CountUp";
 export { Figure } from "./Figure";
 export { Reveal } from "./Reveal";
+export { RevealOnView } from "./RevealOnView";
 export { Section } from "./Section";
 export { Tag } from "./Tag";

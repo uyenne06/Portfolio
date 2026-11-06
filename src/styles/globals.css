@@ -166,6 +166,8 @@
     display: inline-block;
     overflow: hidden;
     vertical-align: bottom;
+    padding-top: 0.22em;
+    margin-top: -0.22em;
     padding-bottom: 0.08em;
     margin-bottom: -0.08em;
   }
@@ -179,6 +181,70 @@
       animation: rise 1s var(--ease-paper) both;
       animation-delay: calc(var(--rise-index, 0) * 90ms + 120ms);
     }
+  }
+}
+
+/* --- Scroll-triggered entrances (driven by RevealOnView's data-reveal) --- */
+
+/* Section titles: words rise out of their baseline. */
+.reveal-word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  padding-top: 0.22em;
+  margin-top: -0.22em;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+
+.reveal-word > span {
+  display: inline-block;
+  transition: transform 0.9s var(--ease-paper);
+  transition-delay: calc(var(--rise-index, 0) * 70ms);
+}
+
+[data-reveal="pending"] .reveal-word > span {
+  transform: translateY(105%);
+}
+
+/* Images: a curtain opens upward. */
+.clip-reveal {
+  transition: clip-path 1.1s var(--ease-paper);
+  clip-path: inset(0 0 0 0);
+}
+
+[data-reveal="pending"] .clip-reveal {
+  clip-path: inset(100% 0 0 0);
+}
+
+/* Contribution calendar: cells pop in as a wave from left to right. */
+.heat-cell {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition:
+    opacity 0.5s var(--ease-paper),
+    transform 0.5s var(--ease-paper);
+  transition-delay: calc(var(--i, 0) * 16ms);
+}
+
+[data-reveal="pending"] .heat-cell {
+  opacity: 0;
+  transform: scale(0.2);
+}
+
+/* Outlined display type for the kinetic stack band. */
+@utility text-outline {
+  color: transparent;
+  -webkit-text-stroke: 0.02em var(--ink);
+}
+
+@theme {
+  --animate-marquee: marquee 48s linear infinite;
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
   }
 }
 
