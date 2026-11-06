@@ -1,0 +1,141 @@
+@import "tailwindcss";
+
+/* next-themes toggles `.dark` on <html>. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+ * Design tokens — "The Preprint".
+ * Black / white with a restrained pink taken from the author's own GitHub README
+ * (#E8A0BF, #B4637F family). Contrast (WCAG 2.x):
+ *   --accent  #A04D6E on #FFFFFF = 5.55:1 (AA body text)   · dark: #E8A0BF on #000000 = 10.21:1
+ *   --muted   #555555 on #FFFFFF = 7.46:1                    · dark: #B3B3B3 on #000000 = 10.6:1
+ *   --accent-decor (#E8A0BF) is 2.06:1 on white → never used for text in light mode.
+ */
+:root {
+  --paper: #ffffff;
+  --ink: #000000;
+  --muted: #555555;
+  --rule: #e4e4e4;
+  --accent: #a04d6e;
+  --accent-decor: #e8a0bf;
+  --accent-soft: #fbe4ee;
+  --on-accent: #000000;
+  color-scheme: light;
+}
+
+.dark {
+  --paper: #000000;
+  --ink: #ffffff;
+  --muted: #b3b3b3;
+  --rule: #2b2b2b;
+  --accent: #e8a0bf;
+  --accent-decor: #e8a0bf;
+  --accent-soft: #1f1420;
+  --on-accent: #000000;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-rule: var(--rule);
+  --color-accent: var(--accent);
+  --color-accent-decor: var(--accent-decor);
+  --color-accent-soft: var(--accent-soft);
+  --color-on-accent: var(--on-accent);
+
+  --font-display: var(--font-newsreader), ui-serif, Georgia, serif;
+  --font-sans: var(--font-be-vietnam), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+}
+
+@theme {
+  /* Fluid type scale (rem + vw inside clamp, no fixed px). */
+  --text-display: clamp(2.75rem, 1.6rem + 5.2vw, 6.5rem);
+  --text-display--line-height: 0.92;
+  --text-display--letter-spacing: -0.02em;
+  --text-title: clamp(1.875rem, 1.45rem + 1.9vw, 3rem);
+  --text-title--line-height: 1.05;
+  /* Section titles sit in a 3-column rail; sized so "Correspondence" fits at lg. */
+  --text-section: clamp(1.75rem, 1.35rem + 1.1vw, 2.375rem);
+  --text-section--line-height: 1.1;
+  --text-subtitle: clamp(1.25rem, 1.1rem + 0.6vw, 1.625rem);
+  --text-subtitle--line-height: 1.25;
+  --text-lede: clamp(1.0625rem, 1rem + 0.35vw, 1.25rem);
+  --text-lede--line-height: 1.6;
+  --text-figure: clamp(2.25rem, 1.6rem + 2.6vw, 4rem);
+  --text-figure--line-height: 1;
+
+  /* Reading measure for body copy. */
+  --container-measure: 65ch;
+  --container-page: 90rem;
+
+  --ease-paper: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    background-color: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-feature-settings: "kern", "liga";
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background-color: var(--accent-decor);
+    color: var(--on-accent);
+  }
+
+  :focus-visible {
+    outline: 0.125rem solid var(--accent);
+    outline-offset: 0.1875rem;
+    border-radius: 0.125rem;
+  }
+
+  section[id],
+  [id].anchor-target {
+    scroll-margin-top: 5rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    ::before,
+    ::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  /* Inline links inside running text: ink colour, pink underline that thickens on hover. */
+  .link-inline {
+    color: inherit;
+    text-decoration-line: underline;
+    text-decoration-color: var(--accent-decor);
+    text-decoration-thickness: 0.08em;
+    text-underline-offset: 0.2em;
+    transition:
+      text-decoration-thickness 160ms var(--ease-paper),
+      color 160ms var(--ease-paper);
+  }
+
+  .link-inline:hover {
+    color: var(--accent);
+    text-decoration-thickness: 0.16em;
+  }
+}
