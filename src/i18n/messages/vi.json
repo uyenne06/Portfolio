@@ -1,0 +1,256 @@
+{
+  "person": {
+    "name": "Nguyễn Huỳnh Hoàng Uyên"
+  },
+  "metadata": {
+    "title": "Nguyễn Huỳnh Hoàng Uyên — Frontend Developer",
+    "titleTemplate": "%s — Nguyễn Huỳnh Hoàng Uyên",
+    "description": "Portfolio của Nguyễn Huỳnh Hoàng Uyên, frontend developer và sinh viên Kỹ thuật phần mềm tại Đại học FPT. Dự án, công nghệ và hoạt động lấy từ GitHub.",
+    "ogAlt": "Nguyễn Huỳnh Hoàng Uyên — Frontend Developer"
+  },
+  "nav": {
+    "skip": "Bỏ qua, tới nội dung",
+    "primary": "Các mục",
+    "menu": "Mục lục",
+    "menuClose": "Đóng mục lục",
+    "home": "Trang chủ",
+    "abstract": "Tóm tắt",
+    "methods": "Phương pháp",
+    "work": "Dự án tiêu biểu",
+    "results": "Kết quả",
+    "correspondence": "Liên hệ",
+    "references": "Tài liệu tham khảo"
+  },
+  "theme": {
+    "label": "Giao diện màu: {current}. Chuyển sang {next}.",
+    "light": "sáng",
+    "dark": "tối",
+    "system": "theo hệ thống"
+  },
+  "locale": {
+    "label": "Ngôn ngữ",
+    "switchTo": "Read in English",
+    "short": "EN"
+  },
+  "hero": {
+    "meta": "Portfolio · {location}",
+    "role": "Frontend Developer",
+    "statement": "Biến bản thiết kế thành giao diện chạy thật với Next.js, React và TypeScript.",
+    "affiliationStudy": "Kỹ thuật phần mềm, Đại học FPT",
+    "affiliationWork": "Thực tập sinh Frontend, VNZ Company — từ tháng 6/2026",
+    "ctaWork": "Xem dự án tiêu biểu",
+    "ctaGithub": "Hồ sơ GitHub",
+    "ctaContact": "Gửi thư cho tôi",
+    "figureLabel": "Hình 1",
+    "figureCaption": "Địa hình đóng góp. Mỗi dải là một ngày trong tuần, mỗi đỉnh là một ngày trong mười hai tháng qua; độ cao theo số đóng góp trên GitHub của ngày đó (tổng cộng {total}).",
+    "figureAlt": "Địa hình khung dây của {total} đóng góp GitHub trong năm qua, mỗi dải ứng với một ngày trong tuần."
+  },
+  "sections": {
+    "abstract": "Tóm tắt",
+    "methods": "Phương pháp",
+    "work": "Dự án tiêu biểu",
+    "results": "Kết quả",
+    "correspondence": "Liên hệ",
+    "references": "Tài liệu tham khảo"
+  },
+  "about": {
+    "epigraph": "Những chi tiết nhỏ tạo nên khác biệt giữa một giao diện chạy được và một giao diện được yêu thích.",
+    "paragraphs": [
+      "Tôi là sinh viên Kỹ thuật phần mềm tại Đại học FPT, TP. Hồ Chí Minh, và từ tháng 6/2026 là thực tập sinh Frontend Developer tại VNZ Company. Tôi xây dựng giao diện web với Next.js, React và TypeScript, chú trọng kiến trúc component, design system nhất quán và trải nghiệm mượt mà.",
+      "Tại VNZ, tôi làm website BMT Decor. Cùng team HKBDU, tôi phát triển frontend cho các dự án ở trường như Pegaxus và Meetly, và tôi cũng làm frontend cho SAVICO AI. Ngoài ra tôi tự làm vài dự án nhỏ để luyện nền tảng: một catalog React để học gọi API, lưu trạng thái trên URL và CI, và một thư viện Java viết theo hướng test trước.",
+      "Tôi để ý những chi tiết người dùng cảm nhận được — khoảng cách, trạng thái, theme, đa ngôn ngữ — và viết code dễ đọc khi sản phẩm lớn dần."
+    ],
+    "keywordsLabel": "Từ khóa",
+    "keywords": [
+      "Kiến trúc component",
+      "Design system",
+      "Giao diện responsive",
+      "Quản lý state",
+      "Đa ngôn ngữ và theme",
+      "Kiểm thử"
+    ]
+  },
+  "techStack": {
+    "intro": "Công nghệ được đếm, không tự khai. Mỗi dòng cho biết bao nhiêu trong {total} dự án tiêu biểu khai báo công cụ đó trong file phụ thuộc (package.json, pom.xml) hoặc dùng nó làm ngôn ngữ của repository.",
+    "tableLabel": "Bảng 1",
+    "tableCaption": "Công cụ theo từng tầng, sắp xếp theo số dự án tiêu biểu sử dụng.",
+    "colTool": "Công cụ",
+    "colProjects": "Dự án",
+    "usage": "{count} / {total}",
+    "groups": {
+      "frontend": "Frontend",
+      "styling": "Giao diện & styling",
+      "data": "State & dữ liệu",
+      "backend": "Backend",
+      "tooling": "Công cụ & kiểm thử"
+    }
+  },
+  "projects": {
+    "intro": "Các dự án tôi có commit, sắp xếp theo số commit của tôi trên nhánh mặc định của từng repository.",
+    "context": {
+      "vnz": "VNZ Company · thực tập",
+      "hkbdu": "HKBDU · dự án nhóm",
+      "team": "Dự án nhóm",
+      "personal": "Dự án cá nhân"
+    },
+    "commits": "{count} commit",
+    "pullRequests": "{merged} / {opened} PR đã merge",
+    "readCase": "Đọc case study",
+    "readCaseFor": "Đọc case study {title}",
+    "repository": "Repository",
+    "demo": "Bản demo",
+    "items": {
+      "pegaxus": {
+        "title": "Pegaxus",
+        "role": "Frontend Developer",
+        "tagline": "Nền tảng logistics vận chuyển ngựa đua xuyên biên giới",
+        "summary": "Frontend của hệ thống gom đặt chỗ vận chuyển, lập tuyến, hồ sơ tuân thủ và hóa đơn cho logistics ngựa đua xuyên biên giới vào một ứng dụng web, thực hiện cho môn SWP391.",
+        "problem": "Đưa một con ngựa đua qua biên giới liên quan đến nhiều bên và nhiều giấy tờ: khách hàng đặt vận chuyển, quản lý lập tuyến chính, tuyến dự phòng và tuyến quay về, và mỗi chuyến cần hồ sơ tuân thủ, bằng chứng kiểm dịch, hải quan cùng hóa đơn.",
+        "approach": "Ứng dụng React 19 và TypeScript tổ chức theo feature (Vite, React Router) với phân quyền theo vai trò. State từ server đi qua TanStack Query, form dùng React Hook Form và Zod, bản đồ dùng MapLibre GL, tài liệu xem bằng PDF.js. Trang landing là một cảnh 3D dựng bằng React Three Fiber.",
+        "highlights": [
+          "Cổng khách hàng: hồ sơ ngựa, đặt chỗ và lịch sử trạng thái",
+          "Lập kế hoạch vận chuyển với tuyến chính, dự phòng và quay về trên bản đồ tương tác",
+          "Quy trình tuân thủ cho hồ sơ, bằng chứng kiểm dịch và hải quan",
+          "Tài khoản theo vai trò, hóa đơn và quy trình thanh toán"
+        ]
+      },
+      "bmt-decor": {
+        "title": "BMT Decor",
+        "role": "Frontend Developer",
+        "tagline": "Website cho công ty thiết kế nội thất và thi công",
+        "summary": "Website của BMT Decor, đơn vị thiết kế nội thất, thi công trọn gói và cải tạo tại TP. Hồ Chí Minh. Thực hiện trong thời gian tôi thực tập tại VNZ Company.",
+        "problem": "Website cần giới thiệu dịch vụ, các dự án đã làm, tin tức và tuyển dụng của BMT Decor, đồng thời có trang yêu cầu báo giá, trang liên hệ và hồ sơ năng lực — cùng một khu vực quản trị phía sau.",
+        "approach": "Next.js 16 App Router, mỗi trang là một feature module: giới thiệu, dịch vụ, dự án, tin tức, tuyển dụng, liên hệ, báo giá, hồ sơ năng lực và quản trị. Giao diện dùng Tailwind CSS v4, shadcn/ui và Base UI; Motion, carousel Embla và hiệu ứng lật trang đảm nhận phần chuyển động.",
+        "highlights": [
+          "Chín feature module tương ứng các route của App Router",
+          "Khu vực quản trị song song với trang công khai",
+          "Section có animation, carousel và hiệu ứng lật trang",
+          "Theme sáng và tối với next-themes"
+        ]
+      },
+      "savico-ai": {
+        "title": "SAVICO AI",
+        "role": "Frontend Developer",
+        "tagline": "Hồ sơ thi công do AI tạo từ ảnh chụp lô đất",
+        "summary": "Người dùng chụp ảnh lô đất, nhập nhu cầu và nhận về bản vẽ, phối cảnh, dự toán chi phí và hồ sơ thi công do AI tạo. Tôi làm frontend và duy trì repository bản preview.",
+        "problem": "Sản phẩm biến một tấm ảnh và danh sách nhu cầu thành bộ hồ sơ thi công qua ba bước — nhập liệu, dự toán, hồ sơ thi công — cùng trang chủ, cẩm nang, hướng dẫn và trang cá nhân: tổng cộng mười một màn hình.",
+        "approach": "Next.js 16 App Router với route có tiền tố ngôn ngữ (vi, en) và route group cho landing, auth, dashboard; proxy xử lý điều hướng ngôn ngữ và bảo vệ route. Biến môi trường được kiểm tra bằng Zod khi khởi động, và các cờ chỉ dùng khi dev thay REST API .NET riêng bằng mock trong trình duyệt. Design token OKLCH hỗ trợ theme sáng, tối và theo hệ thống.",
+        "highlights": [
+          "Luồng ba bước trên mười một màn hình",
+          "Tiếng Việt và tiếng Anh với next-intl",
+          "Biến môi trường kiểm tra bằng Zod, cờ mock auth và mock API",
+          "TanStack Query và Zustand; React Hook Form với Zod"
+        ]
+      },
+      "meetly": {
+        "title": "Meetly",
+        "role": "Frontend Developer",
+        "tagline": "Lên lịch nhóm theo thời gian thực với heatmap trực tiếp",
+        "summary": "Ứng dụng lên lịch nhóm lấy cảm hứng từ When2meet. Người tổ chức chia sẻ link khảo sát, người tham gia tô thời gian rảnh trên lưới kéo-chọn, và heatmap trực tiếp làm nổi bật khung giờ tốt nhất.",
+        "problem": "Người tổ chức cần biết thời gian rảnh của mọi người và thấy rõ chỗ trùng nhau — mà không bắt người tham gia đăng ký tài khoản.",
+        "approach": "Frontend React, Vite và TypeScript, styling bằng Tailwind CSS. Lưới cập nhật qua WebSocket nhờ SignalR client kết nối tới .NET 8 Web API (tầng controller, service, repository) dùng PostgreSQL.",
+        "highlights": [
+          "Lưới thời gian kéo để tô",
+          "Heatmap trực tiếp qua SignalR WebSocket",
+          "Người tham gia không cần đăng ký",
+          "Workflow CI kiểm tra chất lượng trên nhánh main và dev"
+        ]
+      },
+      "ritual-catalog": {
+        "title": "RitualCatalog",
+        "role": "Tác giả duy nhất",
+        "tagline": "Catalog nghi lễ cúng kiếng, làm để học nền tảng React",
+        "summary": "Ứng dụng web liệt kê các nghi lễ cúng kiếng kèm giờ thực hiện, ngày âm lịch và dương lịch, độ khó và nội dung. Tôi làm dự án này để hiểu bản chất luồng dữ liệu trong React và để dựng CI/CD.",
+        "problem": "Mỗi nghi lễ có ngày âm lịch, ngày dương lịch, giờ thực hiện, độ khó và nội dung tham khảo. Người xem cần tìm kiếm và lọc; quản trị viên cần quản lý nghi lễ và người dùng.",
+        "approach": "React, Vite và TypeScript với BaseService dùng chung trên Axios và TanStack Query. Ô tìm kiếm được debounce bằng hook useDebounce tự viết; trang, từ khóa và bộ lọc được lưu trên URL qua searchParams nên mọi trạng thái đều chia sẻ được. GitHub Actions chạy lint và build mỗi lần push, một workflow khác gửi thông báo Discord khi CI thất bại, và ứng dụng được deploy lên Vercel.",
+        "highlights": [
+          "Tìm kiếm có debounce, phân trang và bộ lọc đồng bộ với URL",
+          "Tầng service CRUD dùng chung với TanStack Query",
+          "Xác thực, bảo vệ route, quản lý nghi lễ và người dùng",
+          "CI trên GitHub Actions kèm cảnh báo lỗi qua Discord; deploy Vercel"
+        ]
+      },
+      "math-util": {
+        "title": "Math Utility",
+        "role": "Tác giả duy nhất",
+        "tagline": "Một phần thư viện math của JDK, viết lại theo hướng test trước",
+        "summary": "Dự án Maven viết lại một phần tiện ích toán học của JDK, phát triển theo Test-Driven Development và Data-Driven Testing với JUnit.",
+        "problem": "Luyện viết logic theo hướng test trước: mô tả hành vi bằng test, rồi hiện thực cho tới khi test chạy qua.",
+        "approach": "Java và Maven với JUnit Jupiter 5.10. Test hướng dữ liệu mô tả từng hàm, và một workflow GitHub Actions chạy bộ test mỗi lần push.",
+        "highlights": [
+          "Test-Driven và Data-Driven Testing với JUnit 5",
+          "Build bằng Maven",
+          "Tích hợp liên tục với GitHub Actions"
+        ]
+      }
+    },
+    "case": {
+      "back": "Quay lại dự án tiêu biểu",
+      "problem": "Vấn đề",
+      "approach": "Cách tiếp cận",
+      "highlights": "Điểm nổi bật",
+      "stack": "Công nghệ",
+      "stackNote": "Đọc từ file phụ thuộc và thống kê ngôn ngữ của repository.",
+      "contribution": "Đóng góp",
+      "role": "Vai trò",
+      "commits": "Commit trên nhánh mặc định",
+      "prsOpened": "Pull request đã mở",
+      "prsMerged": "Pull request đã merge",
+      "languages": "Ngôn ngữ theo dung lượng",
+      "links": "Liên kết",
+      "related": "Repository liên quan",
+      "sources": "Nguồn"
+    }
+  },
+  "activity": {
+    "intro": "Hoạt động trong mười hai tháng qua, đọc từ GitHub API.",
+    "stats": {
+      "contributions": "Đóng góp",
+      "commits": "Commit",
+      "pullRequests": "Pull request",
+      "issues": "Issue",
+      "reviews": "Review"
+    },
+    "languagesLabel": "Hình 2",
+    "languagesCaption": "Tỉ lệ ngôn ngữ trên các repository tiêu biểu, tính theo dung lượng code.",
+    "calendarLabel": "Hình 3",
+    "calendarCaption": "Số đóng góp mỗi ngày; ô càng đậm, đóng góp càng nhiều.",
+    "calendarCell": "{date}: {count, plural, =0 {không có đóng góp} other {# đóng góp}}",
+    "less": "Ít",
+    "more": "Nhiều",
+    "recentTitle": "Hoạt động công khai gần đây",
+    "recentLoading": "Đang tải hoạt động gần đây…",
+    "recentEmpty": "Chưa có hoạt động công khai gần đây.",
+    "recentError": "Hiện chưa tải được hoạt động gần đây.",
+    "event": {
+      "PushEvent": "Đẩy {count} commit lên {repo}",
+      "PushEventNoCount": "Đẩy code lên {repo}",
+      "PullRequestEvent": "Pull request ({detail}) trong {repo}",
+      "CreateEvent": "Tạo {detail} trong {repo}"
+    },
+    "sourceLive": "Dữ liệu trực tiếp, làm mới mỗi giờ. Lần lấy gần nhất: {date}.",
+    "sourceSnapshot": "Dữ liệu snapshot ngày {date}.",
+    "otherLanguages": "Khác"
+  },
+  "contact": {
+    "intro": "Email là cách nhanh nhất để liên hệ với tôi. Tôi sẵn sàng cho cơ hội frontend, dự án nhóm và hợp tác về giao diện.",
+    "email": "Email",
+    "github": "GitHub",
+    "linkedin": "LinkedIn",
+    "instagram": "Instagram",
+    "facebook": "Facebook",
+    "location": "Đang ở {location} (UTC+7)."
+  },
+  "references": {
+    "intro": "Mỗi con số trong ngoặc vuông trên trang này trỏ tới một trong các nguồn sau."
+  },
+  "footer": {
+    "colophon": "Dùng font Newsreader, Be Vietnam Pro và JetBrains Mono. Xây dựng với Next.js; dữ liệu từ GitHub API.",
+    "copyright": "© {year} Nguyễn Huỳnh Hoàng Uyên"
+  },
+  "notFound": {
+    "title": "Không tìm thấy trang",
+    "body": "Trang này không tồn tại hoặc đã được chuyển đi.",
+    "back": "Về trang chủ"
+  }
+}

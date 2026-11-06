@@ -1,0 +1,256 @@
+{
+  "person": {
+    "name": "Nguyen Huynh Hoang Uyen"
+  },
+  "metadata": {
+    "title": "Nguyen Huynh Hoang Uyen — Frontend Developer",
+    "titleTemplate": "%s — Nguyen Huynh Hoang Uyen",
+    "description": "Portfolio of Nguyen Huynh Hoang Uyen, frontend developer and Software Engineering student at FPT University. Projects, stack and activity drawn from GitHub.",
+    "ogAlt": "Nguyen Huynh Hoang Uyen — Frontend Developer"
+  },
+  "nav": {
+    "skip": "Skip to content",
+    "primary": "Sections",
+    "menu": "Contents",
+    "menuClose": "Close contents",
+    "home": "Home",
+    "abstract": "Abstract",
+    "methods": "Methods",
+    "work": "Selected work",
+    "results": "Results",
+    "correspondence": "Correspondence",
+    "references": "References"
+  },
+  "theme": {
+    "label": "Colour theme: {current}. Switch to {next}.",
+    "light": "light",
+    "dark": "dark",
+    "system": "system"
+  },
+  "locale": {
+    "label": "Language",
+    "switchTo": "Đọc bằng tiếng Việt",
+    "short": "VI"
+  },
+  "hero": {
+    "meta": "Portfolio · {location}",
+    "role": "Frontend Developer",
+    "statement": "Turning designs into production interfaces with Next.js, React and TypeScript.",
+    "affiliationStudy": "Software Engineering, FPT University",
+    "affiliationWork": "Frontend Developer Intern, VNZ Company — since June 2026",
+    "ctaWork": "Read selected work",
+    "ctaGithub": "GitHub profile",
+    "ctaContact": "Write to me",
+    "figureLabel": "Fig. 1",
+    "figureCaption": "Contribution terrain. Each ridge is a weekday and each vertex a day of the past twelve months; height follows the number of GitHub contributions that day ({total} in total).",
+    "figureAlt": "Wireframe terrain of {total} GitHub contributions over the past year, one ridge per weekday."
+  },
+  "sections": {
+    "abstract": "Abstract",
+    "methods": "Methods",
+    "work": "Selected work",
+    "results": "Results",
+    "correspondence": "Correspondence",
+    "references": "References"
+  },
+  "about": {
+    "epigraph": "Small details make the difference between an interface that works and one that people love.",
+    "paragraphs": [
+      "I am a Software Engineering student at FPT University in Ho Chi Minh City and, since June 2026, a Frontend Developer Intern at VNZ Company. I build web interfaces with Next.js, React and TypeScript, with attention to component architecture, consistent design systems and smooth user experiences.",
+      "At VNZ I work on the BMT Decor website. With the HKBDU team I build the frontend of university projects such as Pegaxus and Meetly, and I worked on the frontend of SAVICO AI. On my own I keep small projects for practising fundamentals: a React catalog for learning data fetching, URL state and CI, and a Java library written test-first.",
+      "I care about the details users notice — spacing, states, theming, localization — and about code that stays readable as the product grows."
+    ],
+    "keywordsLabel": "Keywords",
+    "keywords": [
+      "Component architecture",
+      "Design systems",
+      "Responsive UI",
+      "State management",
+      "i18n and theming",
+      "Testing"
+    ]
+  },
+  "techStack": {
+    "intro": "Technologies are counted, not claimed. Each row shows how many of the {total} featured projects declare the tool in a dependency manifest (package.json, pom.xml) or use it as a repository language.",
+    "tableLabel": "Table 1",
+    "tableCaption": "Tools grouped by layer, ordered by the number of featured projects that use them.",
+    "colTool": "Tool",
+    "colProjects": "Projects",
+    "usage": "{count} of {total}",
+    "groups": {
+      "frontend": "Frontend",
+      "styling": "Styling & UI",
+      "data": "State & data",
+      "backend": "Backend",
+      "tooling": "Tooling & testing"
+    }
+  },
+  "projects": {
+    "intro": "Projects I have committed to, ordered by the number of my commits on each repository's default branch.",
+    "context": {
+      "vnz": "VNZ Company · internship",
+      "hkbdu": "HKBDU · team project",
+      "team": "Team project",
+      "personal": "Personal project"
+    },
+    "commits": "{count, plural, one {# commit} other {# commits}}",
+    "pullRequests": "{merged} of {opened} PRs merged",
+    "readCase": "Read case study",
+    "readCaseFor": "Read the {title} case study",
+    "repository": "Repository",
+    "demo": "Live demo",
+    "items": {
+      "pegaxus": {
+        "title": "Pegaxus",
+        "role": "Frontend Developer",
+        "tagline": "Logistics platform for cross-border racehorse transport",
+        "summary": "Frontend of a system that brings transport booking, route planning, compliance documentation and billing for cross-border racehorse logistics into one web application, built for the SWP391 course.",
+        "problem": "Moving a racehorse across borders involves many parties and documents: customers book transport, managers plan primary, contingency and return routes, and each trip needs compliance dossiers, quarantine and customs evidence, and invoices.",
+        "approach": "A feature-based React 19 and TypeScript app (Vite, React Router) with role-based access. Server state runs through TanStack Query, forms through React Hook Form and Zod, maps through MapLibre GL, and documents are previewed with PDF.js. The landing page is a 3D scene built with React Three Fiber.",
+        "highlights": [
+          "Customer portal: horse profiles, bookings and status history",
+          "Transport planning with primary, contingency and return routes on interactive maps",
+          "Compliance workflow for dossiers, quarantine and customs evidence",
+          "Role-based accounts, invoices and payment workflows"
+        ]
+      },
+      "bmt-decor": {
+        "title": "BMT Decor",
+        "role": "Frontend Developer",
+        "tagline": "Website for an interior design and construction company",
+        "summary": "Website for BMT Decor, which offers interior design, turnkey construction and renovation in Ho Chi Minh City. Built during my internship at VNZ Company.",
+        "problem": "The site has to present BMT Decor's services, project portfolio, news and careers, and give visitors a quotation request, a contact page and a capability profile — with an admin area behind it.",
+        "approach": "Next.js 16 App Router with one feature module per page: about, services, projects, news, careers, contact, quotation, capability profile and admin. The UI uses Tailwind CSS v4, shadcn/ui and Base UI; Motion, Embla carousels and a page-flip effect handle the moving parts.",
+        "highlights": [
+          "Nine feature modules mapped to App Router routes",
+          "Admin area alongside the public site",
+          "Animated sections, carousels and a page-flip effect",
+          "Light and dark themes with next-themes"
+        ]
+      },
+      "savico-ai": {
+        "title": "SAVICO AI",
+        "role": "Frontend Developer",
+        "tagline": "Construction documents generated from a photo of a land plot",
+        "summary": "Users photograph a land plot, enter their requirements and receive AI-generated drawings, renderings, cost estimates and construction documents. I worked on the frontend and maintain the preview deployment repository.",
+        "problem": "The product turns a photo and a list of requirements into a construction dossier through three steps — input, estimate, construction documents — surrounded by a home page, knowledge library, guide and personal dashboard: eleven screens in total.",
+        "approach": "Next.js 16 App Router with locale-prefixed routes (vi, en) and route groups for landing, auth and dashboard; a proxy handles locale routing and route guards. Environment variables are validated with Zod at startup, and dev-only flags swap the separate .NET REST API for in-browser mocks. OKLCH design tokens drive light, dark and system themes.",
+        "highlights": [
+          "Three-step flow across eleven screens",
+          "Vietnamese and English with next-intl",
+          "Zod-validated environment with mock auth and mock API flags",
+          "TanStack Query and Zustand; React Hook Form with Zod"
+        ]
+      },
+      "meetly": {
+        "title": "Meetly",
+        "role": "Frontend Developer",
+        "tagline": "Real-time group scheduling with a live heatmap",
+        "summary": "A group scheduling app inspired by When2meet. Organizers share a poll link, participants paint their availability on a drag-to-select grid, and a live heatmap highlights the best slots.",
+        "problem": "An organizer needs everyone's availability and a clear view of where free times overlap — without asking participants to sign up.",
+        "approach": "A React, Vite and TypeScript frontend styled with Tailwind CSS. The grid updates over WebSockets through a SignalR client connected to a .NET 8 Web API (controller, service, repository layers) backed by PostgreSQL.",
+        "highlights": [
+          "Drag-to-paint availability grid",
+          "Live heatmap over SignalR WebSockets",
+          "No sign-up needed for participants",
+          "CI quality workflow on the main and dev branches"
+        ]
+      },
+      "ritual-catalog": {
+        "title": "RitualCatalog",
+        "role": "Sole author",
+        "tagline": "A catalog of worship rituals, built to learn React fundamentals",
+        "summary": "A web app listing Vietnamese worship rituals (cúng kiếng) with their time of execution, lunar and solar dates, difficulty and content. I built it to understand how data flows through a React app, and to set up CI/CD.",
+        "problem": "Each ritual has a lunar date, a solar date, a time of day, a difficulty level and reference content. Visitors need to search and filter them; administrators need to manage rituals and users.",
+        "approach": "React, Vite and TypeScript with a generic BaseService over Axios and TanStack Query. Search is debounced with a custom useDebounce hook, and page, search and filter values live in the URL through searchParams, so every view can be shared. GitHub Actions lints and builds each push, a second workflow posts to Discord when CI fails, and the app deploys to Vercel.",
+        "highlights": [
+          "Debounced search, pagination and filters synced to the URL",
+          "Generic CRUD service layer with TanStack Query",
+          "Authentication, route guards, ritual and user management",
+          "GitHub Actions CI with Discord failure alerts; Vercel deployment"
+        ]
+      },
+      "math-util": {
+        "title": "Math Utility",
+        "role": "Sole author",
+        "tagline": "Part of the JDK math library, rebuilt test-first",
+        "summary": "A Maven project that re-implements part of the standard JDK math utilities, developed with Test-Driven Development and Data-Driven Testing in JUnit.",
+        "problem": "Practise writing logic test-first: describe the behaviour as tests, then implement until they pass.",
+        "approach": "Java and Maven with JUnit Jupiter 5.10. Data-driven tests describe each function, and a GitHub Actions workflow runs the suite on every push.",
+        "highlights": [
+          "Test-Driven and Data-Driven Testing with JUnit 5",
+          "Maven build",
+          "Continuous integration with GitHub Actions"
+        ]
+      }
+    },
+    "case": {
+      "back": "Back to selected work",
+      "problem": "Problem",
+      "approach": "Approach",
+      "highlights": "Highlights",
+      "stack": "Stack",
+      "stackNote": "Read from the repository's dependency manifest and language statistics.",
+      "contribution": "Contribution",
+      "role": "Role",
+      "commits": "Commits on the default branch",
+      "prsOpened": "Pull requests opened",
+      "prsMerged": "Pull requests merged",
+      "languages": "Languages by size",
+      "links": "Links",
+      "related": "Related repository",
+      "sources": "Sources"
+    }
+  },
+  "activity": {
+    "intro": "Activity over the past twelve months, read from the GitHub API.",
+    "stats": {
+      "contributions": "Contributions",
+      "commits": "Commits",
+      "pullRequests": "Pull requests",
+      "issues": "Issues",
+      "reviews": "Reviews"
+    },
+    "languagesLabel": "Fig. 2",
+    "languagesCaption": "Language share across the featured repositories, by bytes of code.",
+    "calendarLabel": "Fig. 3",
+    "calendarCaption": "Contributions per day; darker cells mean more contributions.",
+    "calendarCell": "{date}: {count, plural, =0 {no contributions} one {# contribution} other {# contributions}}",
+    "less": "Less",
+    "more": "More",
+    "recentTitle": "Latest public activity",
+    "recentLoading": "Loading recent activity…",
+    "recentEmpty": "No recent public activity to show.",
+    "recentError": "Recent activity is unavailable right now.",
+    "event": {
+      "PushEvent": "Pushed {count, plural, one {# commit} other {# commits}} to {repo}",
+      "PushEventNoCount": "Pushed to {repo}",
+      "PullRequestEvent": "Pull request {detail} in {repo}",
+      "CreateEvent": "Created {detail} in {repo}"
+    },
+    "sourceLive": "Live data, refreshed hourly. Last fetched {date}.",
+    "sourceSnapshot": "Snapshot data from {date}.",
+    "otherLanguages": "Other"
+  },
+  "contact": {
+    "intro": "Email is the quickest way to reach me. I am open to frontend opportunities, team projects and UI collaboration.",
+    "email": "Email",
+    "github": "GitHub",
+    "linkedin": "LinkedIn",
+    "instagram": "Instagram",
+    "facebook": "Facebook",
+    "location": "Based in {location} (UTC+7)."
+  },
+  "references": {
+    "intro": "Every bracketed number on this page points to one of these sources."
+  },
+  "footer": {
+    "colophon": "Set in Newsreader, Be Vietnam Pro and JetBrains Mono. Built with Next.js; data from the GitHub API.",
+    "copyright": "© {year} Nguyen Huynh Hoang Uyen"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "body": "This page does not exist or has moved.",
+    "back": "Back to the home page"
+  }
+}
