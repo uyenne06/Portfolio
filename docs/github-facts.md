@@ -151,12 +151,31 @@ Ngôn ngữ (bytes, `repos/{repo}/languages`) trên các repo có đóng góp: T
 
 ---
 
-## 5. Mâu thuẫn & TODO cần bạn xác nhận
+## 5. Số liệu đóng góp chi tiết (snapshot 2026-11-06)
 
-1. **BMT AI Construction (`TaskCoper/bmt-fe`)**: PR mô tả đây là dự án tại VNZ, nhưng API cho thấy **0 commit** của `uyenne06` trên repo này (chỉ `kat-minh` 6 commit). Ngược lại, bạn có 86 + 94 commit ở **BMT Decor** (`BMT-Landing-Page` / `hdyui/BMT_FE`). → Portfolio nên giới thiệu dự án nào là “công việc tại VNZ”?
-2. **SmartHome IoT** và **OCR Testing** (HKBDU): **0 commit** của `uyenne06` → đề xuất **không** đưa vào portfolio (chính PR cũng có TODO “chỉ giữ dự án Uyên thực sự tham gia”).
-3. **Năm bắt đầu thực tập VNZ**: 06/2025 hay 06/2026? (tài khoản GitHub tạo 08/2025).
-4. **Vai trò trong HKBDU** và **vai trò cụ thể** trong Pegaxus / Meetly / SAVICO (phần bạn làm) — chưa có nguồn.
-5. **RitualCatalog**: cần 1 câu mô tả “catalog này về gì”.
-6. **Repo private** `SEAL_Hackathon` (có demo Vercel) và `K20-MERN`: có muốn đưa vào không? (mặc định: **không**).
-7. **LinkedIn** / kênh liên hệ khác: chưa có trên GitHub → Contact chỉ hiển thị Email, GitHub, Instagram, Facebook.
+| Repo | Commit (contributors API, gồm merge) | Commit không-merge (stats API) | PR mở / merged (search API) | Tuần hoạt động | Khoảng thời gian |
+|---|---|---|---|---|---|
+| HKBDU/pegaxus-fe | 148 | 49 | 41 / 33 | 6 | 2026-09-20 → 2026-10-25 |
+| hdyui/BMT_FE | 94 (GQL:contrib) | 41 | 37 / 36 | 9 | 2026-07-26 → 2026-09-27 |
+| uyenne06/BMT-Landing-Page | 86 | 38 | 0 / 0 | 8 | 2026-07-26 → 2026-09-20 |
+| HKBDU/Meetly | 39 | 29 | 11 / 4 | 3 | 2026-09-06 → 2026-09-20 |
+| kat-minh/savico-ai | 27 | 22 | 8 / 8 | 4 | 2026-09-13 → 2026-10-04 |
+| uyenne06/savico-ai-preview | 16 | 11 | 4 / 3 | 2 | 2026-09-13 → 2026-09-20 |
+| uyenne06/RitualCatalog | 16 | 16 | 0 / 0 | 2 | 2026-07-26 → 2026-08-02 |
+| uyenne06/math-util | 10 (GQL) | 9 | 0 / 0 | 1 | 2026-10-11 |
+
+Nguồn: `repos/{r}/contributors`, `repos/{r}/stats/contributors`, `search/issues?q=repo:{r}+type:pr+author:uyenne06[+is:merged]`.
+Số dòng thêm/xoá có trong stats API nhưng **không hiển thị** vì bị thổi phồng bởi lockfile/asset (vd. BMT +273k).
+
+## 6. Quyết định của chủ portfolio (xác nhận 2026-11-06)
+
+| # | Quyết định | Nguồn |
+|---|---|---|
+| 1 | **BMT Decor** (`uyenne06/BMT-Landing-Page` + `hdyui/BMT_FE`) là dự án làm tại **VNZ Company**. Không dùng `TaskCoper/bmt-fe`. | Chủ portfolio xác nhận trong chat |
+| 2 | Thực tập VNZ bắt đầu **06/2026** – hiện tại. | Chủ portfolio xác nhận |
+| 3 | Vai trò trong Pegaxus, Meetly, SAVICO AI: **Frontend Developer**. | Chủ portfolio xác nhận |
+| 4 | RitualCatalog: web về **nghi lễ cúng kiếng** (tên, giờ thực hiện, ngày âm/dương lịch, độ khó, nội dung, tham khảo, danh mục, “hot”). Mục đích: học bản chất React — gọi API qua service/BaseService, `useDebounce`, phân trang, đồng bộ `searchParams`/filter params lên URL, TanStack Query; và học CI/CD: workflow `ci.yml` (lint + build) + `notify-fail.yml` gửi **thông báo Discord khi CI thất bại**; deploy Vercel. | Chủ portfolio + `src/features/ritual/type.ts`, `pages/RitualsCatalog.tsx`, `shared/hooks/useDebounce.ts`, `.github/workflows/*` |
+| 5 | LinkedIn: https://www.linkedin.com/in/nguy%E1%BB%85n-hu%E1%BB%B3nh-ho%C3%A0ng-uy%C3%AAn-7472b5353/ | Chủ portfolio cung cấp |
+| 6 | **Không** đưa SEAL_Hackathon, K20-MERN, SmartHome IoT, OCR Testing, `TaskCoper/bmt-fe`, final-test, vite-app. | Chủ portfolio đồng ý |
+
+> Ghi chú: chủ portfolio mô tả Discord “khi deploy thành công”, nhưng code (`notify-fail.yml`, điều kiện `conclusion == 'failure'`) gửi khi CI **thất bại** → portfolio ghi theo code.
