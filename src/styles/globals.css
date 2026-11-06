@@ -204,7 +204,7 @@
 }
 
 [data-reveal="pending"] .reveal-word > span {
-  transform: translateY(105%);
+  transform: translateY(140%);
 }
 
 /* Images: a curtain opens upward. */
@@ -230,6 +230,33 @@
 [data-reveal="pending"] .heat-cell {
   opacity: 0;
   transform: scale(0.2);
+}
+
+/* Citation back-link target: a pink pulse around the [n] the reader jumped to. */
+.cite-flash {
+  display: inline-block;
+  border-radius: 999rem;
+  animation: cite-flash 2.4s var(--ease-paper);
+}
+
+@keyframes cite-flash {
+  0% {
+    transform: scale(1);
+  }
+  15%,
+  45% {
+    transform: scale(2.2);
+    background-color: var(--accent-decor);
+    color: var(--on-accent);
+    box-shadow:
+      0 0 0 0.3rem var(--accent-soft),
+      0 0 0 0.9rem color-mix(in oklab, var(--accent-decor) 25%, transparent);
+  }
+  100% {
+    transform: scale(1);
+    background-color: transparent;
+    box-shadow: 0 0 0 1.6rem transparent;
+  }
 }
 
 /* Outlined display type for the kinetic stack band. */

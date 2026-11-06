@@ -76,10 +76,9 @@
     ]
   },
   "techStack": {
-    "intro": "Technologies are counted, not claimed: a dot means the project declares the tool in its dependency manifest (package.json, pom.xml) or uses it as a repository language. {total} projects in total.",
+    "intro": "Technologies are counted, not claimed: a tool appears when a project declares it in its dependency manifest (package.json, pom.xml) or uses it as a repository language. {total} projects in total.",
     "tableLabel": "Fig. 2",
-    "tableCaption": "Tools by project. Hover a project name to follow its column.",
-    "colTool": "Tool",
+    "tableCaption": "The stack as a type specimen: the bigger the word, the more projects use it (the small number is the count). Pick a project to see its stack; point at a tool to see which projects use it.",
     "groups": {
       "frontend": "Frontend",
       "styling": "Styling & UI",
@@ -87,11 +86,10 @@
       "backend": "Backend",
       "tooling": "Tooling & testing"
     },
-    "colTotal": "Projects",
-    "used": "used",
-    "unused": "not used",
-    "showAll": "Show {count} tools used in only one project",
-    "showFewer": "Show fewer tools"
+    "filterLabel": "Stack of",
+    "allProjects": "All projects",
+    "toolCount": "{count, plural, one {# tool} other {# tools}}",
+    "usage": "{tool}: used in {count} of {total} projects ({projects})"
   },
   "projects": {
     "intro": "Projects I have committed to, ordered by the number of my commits on each repository's default branch.",
@@ -260,7 +258,20 @@
     "copied": "Copied"
   },
   "references": {
-    "intro": "Every bracketed number on this page points to one of these sources."
+    "intro": "Every bracketed number on this page points to one of these sources. Each entry counts where it is cited — jump back to any citation.",
+    "sources": "sources",
+    "citations": "citations",
+    "cited": "{count, plural, =0 {Not cited on this page} one {Cited once} other {Cited # times}}",
+    "citedIn": "Cited in",
+    "top": "Title page",
+    "end": "End of document.",
+    "backToTop": "Back to top",
+    "kinds": {
+      "api": "GitHub API",
+      "readme": "Profile README",
+      "repository": "Repository",
+      "author": "Author"
+    }
   },
   "footer": {
     "colophon": "Set in Newsreader, Be Vietnam Pro and JetBrains Mono. Built with Next.js; data from the GitHub API.",

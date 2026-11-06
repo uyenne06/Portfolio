@@ -76,10 +76,9 @@
     ]
   },
   "techStack": {
-    "intro": "Công nghệ được đếm, không tự khai: một chấm nghĩa là dự án khai báo công cụ đó trong file phụ thuộc (package.json, pom.xml) hoặc dùng nó làm ngôn ngữ của repository. Tổng cộng {total} dự án.",
+    "intro": "Công nghệ được đếm, không tự khai: một công cụ chỉ xuất hiện khi dự án khai báo nó trong file phụ thuộc (package.json, pom.xml) hoặc dùng nó làm ngôn ngữ của repository. Tổng cộng {total} dự án.",
     "tableLabel": "Hình 2",
-    "tableCaption": "Công cụ theo từng dự án. Rê chuột vào tên dự án để dò theo cột.",
-    "colTool": "Công cụ",
+    "tableCaption": "Stack dưới dạng bản in mẫu chữ: chữ càng to, càng nhiều dự án dùng (số nhỏ là số dự án). Chọn một dự án để xem stack của nó; trỏ vào một công cụ để xem dự án nào dùng.",
     "groups": {
       "frontend": "Frontend",
       "styling": "Giao diện & styling",
@@ -87,11 +86,10 @@
       "backend": "Backend",
       "tooling": "Công cụ & kiểm thử"
     },
-    "colTotal": "Dự án",
-    "used": "có dùng",
-    "unused": "không dùng",
-    "showAll": "Xem thêm {count} công cụ chỉ dùng trong một dự án",
-    "showFewer": "Thu gọn"
+    "filterLabel": "Stack của",
+    "allProjects": "Tất cả dự án",
+    "toolCount": "{count} công cụ",
+    "usage": "{tool}: dùng trong {count} / {total} dự án ({projects})"
   },
   "projects": {
     "intro": "Các dự án tôi có commit, sắp xếp theo số commit của tôi trên nhánh mặc định của từng repository.",
@@ -260,7 +258,20 @@
     "copied": "Đã sao chép"
   },
   "references": {
-    "intro": "Mỗi con số trong ngoặc vuông trên trang này trỏ tới một trong các nguồn sau."
+    "intro": "Mỗi con số trong ngoặc vuông trên trang trỏ tới một trong các nguồn sau. Mỗi nguồn ghi rõ được trích ở đâu — bấm để quay lại đúng chỗ trích dẫn.",
+    "sources": "nguồn",
+    "citations": "trích dẫn",
+    "cited": "{count, plural, =0 {Chưa được trích trên trang này} other {Được trích # lần}}",
+    "citedIn": "Được trích ở",
+    "top": "Trang bìa",
+    "end": "Hết tài liệu.",
+    "backToTop": "Về đầu trang",
+    "kinds": {
+      "api": "GitHub API",
+      "readme": "README hồ sơ",
+      "repository": "Repository",
+      "author": "Tác giả"
+    }
   },
   "footer": {
     "colophon": "Dùng font Newsreader, Be Vietnam Pro và JetBrains Mono. Xây dựng với Next.js; dữ liệu từ GitHub API.",
