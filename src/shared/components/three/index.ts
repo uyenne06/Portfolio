@@ -1,3 +1,3 @@
-export { toContributionHeights } from "./contribution-heights";
-export { ContributionFigure } from "./ContributionFigure";
-export { ContributionRidges } from "./ContributionRidges";
+export type { RidgeSeries, RidgeTimeline } from "./types";
+export { WorkRidgesStill } from "./WorkRidgesStill";
+export { WorkTimelineFigure } from "./WorkTimelineFigure";

@@ -1,76 +1,115 @@
-import { useTranslations } from "next-intl";
+import { useFormatter, useTranslations } from "next-intl";
+import type { CSSProperties } from "react";
 
-import { ContributionFigure } from "@/shared/components/three";
+import type { RidgeTimeline } from "@/shared/components/three";
+import { WorkTimelineFigure } from "@/shared/components/three";
 import { BrandIcon, ButtonLink, Cite, Container, Figure } from "@/shared/components/ui";
+
+import type { WorkTimeline } from "../types";
 
 type HeroSectionProps = {
   location: string | null;
   githubUrl: string;
-  totalContributions: number;
-  /** weeks × 7 normalised heights for Fig. 1. */
-  heights: number[][];
+  timeline: WorkTimeline;
 };
 
-/** Title page: author, role, affiliations, calls to action and Fig. 1. */
-export function HeroSection({
-  location,
-  githubUrl,
-  totalContributions,
-  heights,
-}: HeroSectionProps) {
+const utcDate = (iso: string) => new Date(`${iso}T00:00:00Z`);
+
+/** Title page: the name as the headline, role and affiliations, then Fig. 1. */
+export function HeroSection({ location, githubUrl, timeline }: HeroSectionProps) {
   const t = useTranslations("hero");
   const tPerson = useTranslations("person");
+  const tProjects = useTranslations("projects");
+  const format = useFormatter();
+
+  const words = tPerson("name").split(" ");
+  const { weekStarts } = timeline;
+  const start = weekStarts[0];
+  const end = weekStarts.at(-1);
+  const monthOf = (iso: string) => utcDate(iso).getUTCMonth();
+  const range = (from: string, to: string) =>
+    format.dateTimeRange(utcDate(from), utcDate(to), {
+      month: "short",
+      year: "numeric",
+      timeZone: "UTC",
+    });
+
+  // Presentation data for the client figure: localised labels, month ticks, anchors.
+  const monthStarts = weekStarts.flatMap((week, index) =>
+    index === 0 || monthOf(week) !== monthOf(weekStarts[index - 1] ?? week)
+      ? [{ index, label: format.dateTime(utcDate(week), { month: "short", timeZone: "UTC" }) }]
+      : [],
+  );
+  // Drop the first tick when the next month begins within two weeks (labels would collide).
+  const months = (monthStarts[1]?.index ?? Infinity) <= 2 ? monthStarts.slice(1) : monthStarts;
+
+  const ridges: RidgeTimeline = {
+    weekCount: weekStarts.length,
+    months,
+    series: timeline.series.map((series) => ({
+      id: series.id,
+      label: series.id === "other" ? t("otherRepositories") : tProjects(`items.${series.id}.title`),
+      detail: t("seriesDetail", {
+        count: series.total,
+        range: range(series.firstWeek, series.lastWeek),
+      }),
+      values: series.values,
+      href: series.id === "other" ? null : `#project-${series.id}`,
+    })),
+  };
+  const period = start && end ? range(start, end) : "";
 
   return (
-    <section aria-labelledby="hero-heading" className="pt-10 pb-16 lg:pt-16 lg:pb-24">
+    <section aria-labelledby="hero-heading" className="pt-10 pb-12 lg:pt-14">
       <Container>
-        {location ? (
-          <p className="font-mono text-xs text-muted">{t("meta", { location })}</p>
-        ) : null}
-
-        <div className="mt-8 grid grid-cols-1 gap-10 lg:grid-cols-12 lg:items-end lg:gap-x-10">
-          <div className="lg:col-span-8">
-            <h1 id="hero-heading" className="font-display text-display font-medium text-balance">
-              {tPerson("name")}
-            </h1>
-            <p className="mt-6 max-w-measure font-display text-subtitle text-pretty">
-              {t("statement")}
-              <Cite ids={["profile-readme"]} />
-            </p>
-          </div>
-
-          <div className="lg:col-span-4">
-            <p className="font-medium">
-              {t("role")}
-              <Cite ids={["profile-readme"]} />
-            </p>
-            <ol className="mt-3 space-y-1.5 text-sm text-muted">
-              <li>
-                <sup className="mr-1 font-mono text-accent">1</sup>
-                {t("affiliationStudy")}
-              </li>
-              <li>
-                <sup className="mr-1 font-mono text-accent">2</sup>
-                {t("affiliationWork")}
-                <Cite ids={["owner-confirmation"]} />
-              </li>
-            </ol>
-          </div>
+        <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 font-mono text-xs text-muted">
+          {location ? <p>{t("meta", { location })}</p> : null}
+          <p>{t("availability")}</p>
         </div>
 
-        <div className="mt-10 flex flex-wrap gap-3">
-          <ButtonLink href="#work" variant="primary">
-            {t("ctaWork")}
-          </ButtonLink>
-          <ButtonLink
-            href={githubUrl}
-            target="_blank"
-            rel="noreferrer"
-            icon={<BrandIcon name="github" className="size-4" />}
-          >
-            {t("ctaGithub")}
-          </ButtonLink>
-          <ButtonLink href="#correspondence">{t("ctaContact")}</ButtonLink>
+        <h1
+          id="hero-heading"
+          className="mt-8 font-display text-display font-medium text-balance lg:mt-12"
+        >
+          {words.map((word, index) => (
+            <span key={`${word}-${index}`}>
+              <span className="rise-word">
+                <span style={{ "--rise-index": index } as CSSProperties}>{word}</span>
+              </span>
+              {index < words.length - 1 ? " " : null}
+            </span>
+          ))}
+        </h1>
+
+        <div className="mt-10 grid grid-cols-1 gap-10 border-t border-rule pt-8 lg:mt-14 lg:grid-cols-12 lg:gap-x-10">
+          <p className="font-display text-lede text-pretty lg:col-span-6">
+            <span className="font-semibold">{t("role")}.</span> {t("statement")}
+            <Cite ids={["profile-readme"]} />
+          </p>
+          <ol className="space-y-2 text-sm text-muted lg:col-span-3">
+            <li>
+              <sup className="mr-1 font-mono text-accent">1</sup>
+              {t("affiliationStudy")}
+            </li>
+            <li>
+              <sup className="mr-1 font-mono text-accent">2</sup>
+              {t("affiliationWork")}
+              <Cite ids={["owner-confirmation"]} />
+            </li>
+          </ol>
+          <div className="flex flex-wrap content-start gap-3 lg:col-span-3 lg:justify-end">
+            <ButtonLink href="#work" variant="primary">
+              {t("ctaWork")}
+            </ButtonLink>
+            <ButtonLink
+              href={githubUrl}
+              target="_blank"
+              rel="noreferrer"
+              icon={<BrandIcon name="github" className="size-4" />}
+            >
+              {t("ctaGithub")}
+            </ButtonLink>
+          </div>
         </div>
 
         <Figure
@@ -78,17 +117,17 @@ export function HeroSection({
           label={t("figureLabel")}
           caption={
             <>
-              {t("figureCaption", { total: totalContributions })}
+              <span className="font-medium text-ink">{t("figureTitle")}</span>{" "}
+              {t("figureCaption", { period })}
               <Cite ids={["contributions"]} />
             </>
           }
         >
-          <div className="border-y border-rule">
-            <ContributionFigure
-              heights={heights}
-              label={t("figureAlt", { total: totalContributions })}
-            />
-          </div>
+          <WorkTimelineFigure
+            timeline={ridges}
+            label={t("figureAlt", { count: ridges.series.length, period })}
+            legendLabel={t("legendLabel")}
+          />
         </Figure>
       </Container>
     </section>
