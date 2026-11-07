@@ -1,7 +1,6 @@
 "use client";
 
 import { Check, Copy } from "lucide-react";
-import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useState } from "react";
 
 import { cn } from "@/shared/utils";
@@ -44,17 +43,10 @@ export function CopyEmailButton({ email, copyLabel, copiedLabel }: CopyEmailButt
         <Copy className="size-4" aria-hidden="true" strokeWidth={1.5} />
       )}
       <span aria-live="polite" className="relative inline-flex overflow-hidden">
-        <AnimatePresence mode="wait" initial={false}>
-          <motion.span
-            key={copied ? "copied" : "copy"}
-            initial={{ y: "100%", opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: "-100%", opacity: 0 }}
-            transition={{ duration: 0.18 }}
-          >
-            {copied ? copiedLabel : copyLabel}
-          </motion.span>
-        </AnimatePresence>
+        {/* Keyed so each new label slides up into place (.label-swap in globals.css). */}
+        <span key={copied ? "copied" : "copy"} className="label-swap">
+          {copied ? copiedLabel : copyLabel}
+        </span>
       </span>
     </button>
   );

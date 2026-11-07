@@ -1,7 +1,6 @@
 "use client";
 
 import { ArrowUp, ArrowUpRight, CornerLeftUp } from "lucide-react";
-import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
 import type { ReferenceKind } from "@/config/references.config";
@@ -14,6 +13,19 @@ export type ReferenceEntry = {
   label: string;
   kind: ReferenceKind;
   url?: string;
+};
+
+/** Every string of the index, formatted on the server (no message formatter on the client). */
+export type ReferenceLabels = {
+  sources: string;
+  citations: string;
+  citedIn: string;
+  top: string;
+  end: string;
+  backToTop: string;
+  kinds: Record<ReferenceKind, string>;
+  /** "Cited N times" for 0, 1 and any other count (`{n}` is replaced by the formatted count). */
+  cited: { zero: string; one: string; other: string };
 };
 
 type Backlink = { sectionId: string; title: string; anchor: HTMLAnchorElement };
@@ -61,15 +73,32 @@ function hostOf(url: string): string {
  * The bibliography as a living citation index: each source shows how often and where it is
  * cited on this page (counted from the DOM), with back-links that jump to the citation.
  */
-export function ReferenceIndex({ entries, locale }: { entries: ReferenceEntry[]; locale: string }) {
-  const t = useTranslations("references");
+export function ReferenceIndex({
+  entries,
+  locale,
+  labels,
+}: {
+  entries: ReferenceEntry[];
+  locale: string;
+  labels: ReferenceLabels;
+}) {
   const [usage, setUsage] = useState<Record<number, Usage>>({});
 
   useEffect(() => {
     // Citations are server-rendered, so the DOM is complete once this client island mounts.
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setUsage(collectUsage(entries));
+    // Counting waits for an idle moment so it stays out of hydration.
+    const idle = window.requestIdleCallback ?? ((run: () => void) => window.setTimeout(run, 200));
+    const cancel = window.cancelIdleCallback ?? window.clearTimeout;
+    const handle = idle(() => setUsage(collectUsage(entries)));
+    return () => cancel(handle);
   }, [entries]);
+
+  const citedLabel = (count: number) =>
+    count === 0
+      ? labels.cited.zero
+      : count === 1
+        ? labels.cited.one
+        : labels.cited.other.replace("{n}", new Intl.NumberFormat(locale).format(count));
 
   const totalCitations = Object.values(usage).reduce((sum, entry) => sum + entry.count, 0);
   const maxCount = Math.max(1, ...Object.values(usage).map((entry) => entry.count));
@@ -77,10 +106,10 @@ export function ReferenceIndex({ entries, locale }: { entries: ReferenceEntry[];
   return (
     <div>
       <p className="font-display text-title font-medium">
-        <CountUp value={entries.length} locale={locale} /> {t("sources")}
+        <CountUp value={entries.length} locale={locale} /> {labels.sources}
         <span className="mx-3 text-accent-decor">·</span>
         {totalCitations > 0 ? <CountUp value={totalCitations} locale={locale} /> : "—"}{" "}
-        {t("citations")}
+        {labels.citations}
       </p>
 
       <ol className="mt-10 border-t-2 border-ink">
@@ -103,7 +132,7 @@ export function ReferenceIndex({ entries, locale }: { entries: ReferenceEntry[];
               <div className="min-w-0 sm:col-span-6">
                 <p className="font-mono text-xs text-accent">
                   <span className="sr-only">[{entry.number}] </span>
-                  {t(`kinds.${entry.kind}`)}
+                  {labels.kinds[entry.kind]}
                 </p>
                 {entry.url ? (
                   <a
@@ -129,7 +158,7 @@ export function ReferenceIndex({ entries, locale }: { entries: ReferenceEntry[];
 
               <div className="sm:col-span-4">
                 <p className="font-mono text-xs text-muted">
-                  {used ? t("cited", { count: used.count }) : " "}
+                  {used ? citedLabel(used.count) : " "}
                 </p>
                 <div
                   className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-rule"
@@ -141,7 +170,7 @@ export function ReferenceIndex({ entries, locale }: { entries: ReferenceEntry[];
                   />
                 </div>
                 {used && used.backlinks.length > 0 ? (
-                  <ul className="mt-3 flex flex-wrap gap-2" aria-label={t("citedIn")}>
+                  <ul className="mt-3 flex flex-wrap gap-2" aria-label={labels.citedIn}>
                     {used.backlinks.map((link) => (
                       <li key={link.sectionId}>
                         <button
@@ -153,7 +182,7 @@ export function ReferenceIndex({ entries, locale }: { entries: ReferenceEntry[];
                           )}
                         >
                           <CornerLeftUp className="size-3.5" aria-hidden="true" strokeWidth={1.5} />
-                          {link.title || t("top")}
+                          {link.title || labels.top}
                         </button>
                       </li>
                     ))}
@@ -170,7 +199,7 @@ export function ReferenceIndex({ entries, locale }: { entries: ReferenceEntry[];
           <span aria-hidden="true" className="text-accent-decor">
             ∎
           </span>
-          <span className="italic">{t("end")}</span>
+          <span className="italic">{labels.end}</span>
         </p>
         <a
           href="#main"
@@ -181,7 +210,7 @@ export function ReferenceIndex({ entries, locale }: { entries: ReferenceEntry[];
             aria-hidden="true"
             strokeWidth={1.5}
           />
-          {t("backToTop")}
+          {labels.backToTop}
         </a>
       </div>
     </div>

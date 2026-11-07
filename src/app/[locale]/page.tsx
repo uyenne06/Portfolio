@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
+import { Suspense } from "react";
 
 import { siteConfig } from "@/config/site.config";
 import { AboutSection } from "@/features/about";
@@ -30,6 +31,9 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
     (id) => id.startsWith("repo-"),
   );
 
+  // Each section is its own Suspense boundary. Nothing here suspends (the page is prerendered),
+  // but separate boundaries let React hydrate them one at a time and yield to the browser in
+  // between, instead of one long main-thread task for the whole page.
   return (
     <>
       <HeroSection
@@ -37,20 +41,34 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
         githubUrl={data.profile.url}
         timeline={buildWorkTimeline(data)}
       />
-      <AboutSection number={numberOf("abstract")} />
-      <StackMarquee items={topTools(matrix)} />
-      <TechStackSection matrix={matrix} number={numberOf("methods")} citations={stackCitations} />
-      <ProjectsSection projects={projects} number={numberOf("work")} />
-      <ActivitySection
-        summary={getActivitySummary(data, featuredRepos, source)}
-        number={numberOf("results")}
-      />
-      <ContactSection
-        channels={getContactChannels(data.profile, siteConfig.linkedinUrl)}
-        location={data.profile.location}
-        number={numberOf("correspondence")}
-      />
-      <ReferencesSection />
+      <Suspense>
+        <AboutSection number={numberOf("abstract")} />
+      </Suspense>
+      <Suspense>
+        <StackMarquee items={topTools(matrix)} />
+      </Suspense>
+      <Suspense>
+        <TechStackSection matrix={matrix} number={numberOf("methods")} citations={stackCitations} />
+      </Suspense>
+      <Suspense>
+        <ProjectsSection projects={projects} number={numberOf("work")} />
+      </Suspense>
+      <Suspense>
+        <ActivitySection
+          summary={getActivitySummary(data, featuredRepos, source)}
+          number={numberOf("results")}
+        />
+      </Suspense>
+      <Suspense>
+        <ContactSection
+          channels={getContactChannels(data.profile, siteConfig.linkedinUrl)}
+          location={data.profile.location}
+          number={numberOf("correspondence")}
+        />
+      </Suspense>
+      <Suspense>
+        <ReferencesSection />
+      </Suspense>
     </>
   );
 }

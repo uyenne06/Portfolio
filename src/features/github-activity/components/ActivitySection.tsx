@@ -83,7 +83,7 @@ export function ActivitySection({ summary, number }: ActivitySectionProps) {
               <LanguageBar languages={summary.languages} />
             </Figure>
           </Reveal>
-          <RecentActivity />
+          <RecentActivity title={t("recentTitle")} loading={t("recentLoading")} />
         </div>
       </div>
 

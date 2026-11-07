@@ -1,29 +1,37 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { lazy, Suspense, useRef, useState } from "react";
 
-import { useRecentActivity } from "../hooks/useRecentActivity";
-import { RecentActivityList } from "./RecentActivityList";
+import { useInView } from "@/shared/hooks";
 
-/** Client island: loading / error / empty states around the recent-activity list. */
-export function RecentActivity() {
-  const t = useTranslations("activity");
-  const { data, isPending, isError } = useRecentActivity();
+// The feed brings the query library and the message formatter; it loads near the viewport.
+const RecentActivityFeed = lazy(() => import("./RecentActivityFeed"));
+
+type RecentActivityProps = { title: string; loading: string };
+
+/**
+ * Client island for the live "latest activity" list. The fetch (and the code behind it) only
+ * starts once the block is about a screen away; until then it shows the loading line.
+ */
+export function RecentActivity({ title, loading }: RecentActivityProps) {
+  const block = useRef<HTMLElement>(null);
+  const near = useInView(block, "100% 0px");
+  const [started, setStarted] = useState(false);
+  if (near && !started) setStarted(true);
+  const placeholder = <p className="text-sm text-muted">{loading}</p>;
 
   return (
-    <section aria-labelledby="recent-activity-heading" aria-busy={isPending}>
+    <section ref={block} aria-labelledby="recent-activity-heading">
       <h3 id="recent-activity-heading" className="font-display text-subtitle font-medium">
-        {t("recentTitle")}
+        {title}
       </h3>
       <div className="mt-4" aria-live="polite">
-        {isPending ? (
-          <p className="text-sm text-muted">{t("recentLoading")}</p>
-        ) : isError ? (
-          <p className="text-sm text-muted">{t("recentError")}</p>
-        ) : data.length === 0 ? (
-          <p className="text-sm text-muted">{t("recentEmpty")}</p>
+        {started ? (
+          <Suspense fallback={placeholder}>
+            <RecentActivityFeed />
+          </Suspense>
         ) : (
-          <RecentActivityList events={data} />
+          placeholder
         )}
       </div>
     </section>

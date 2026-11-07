@@ -1,10 +1,14 @@
 "use client";
 
-import { useMotionValueEvent, useReducedMotion, useScroll } from "motion/react";
 import dynamic from "next/dynamic";
 import { useRef, useState } from "react";
 
-import { useInView, useLowPowerDevice } from "@/shared/hooks";
+import {
+  useInView,
+  useLowPowerDevice,
+  usePrefersReducedMotion,
+  useScrollProgress,
+} from "@/shared/hooks";
 import { cn } from "@/shared/utils";
 
 import { PeriodicStack, type PeriodicStackProps } from "./PeriodicStack";
@@ -18,7 +22,8 @@ type View = "stack" | "constellation";
 export type StackViewsProps = PeriodicStackProps & {
   viewLabels: { group: string; stack: string; constellation: string };
   hint: { stack: string; constellation: string };
-  usedInCount: (count: number) => string;
+  /** "Used in N of M projects", keyed by N. */
+  usedInCount: Record<number, string>;
   sceneLabel: string;
 };
 
@@ -29,18 +34,21 @@ export type StackViewsProps = PeriodicStackProps & {
  */
 export function StackViews(props: StackViewsProps) {
   const { projects, groups, labels, viewLabels, hint, usedInCount, sceneLabel } = props;
-  const reduced = useReducedMotion() ?? false;
+  const reduced = usePrefersReducedMotion();
   const lowPower = useLowPowerDevice();
   const figure = useRef<HTMLDivElement>(null);
   const visible = useInView(figure, "200px");
+  // Load three.js only when the figure is about a screen away, then keep it mounted.
+  const near = useInView(figure, "100% 0px");
+  const [mounted, setMounted] = useState(false);
+  if (near && !mounted) setMounted(true);
   const [view, setView] = useState<View>("stack");
   const [project, setProject] = useState<number | null>(null);
   const [hovered, setHovered] = useState<string | null>(null);
   const [ready, setReady] = useState(false);
 
-  const { scrollYProgress } = useScroll({ target: figure, offset: ["start end", "end start"] });
   const progress = useRef(0);
-  useMotionValueEvent(scrollYProgress, "change", (value) => {
+  useScrollProgress(figure, "cross", (value) => {
     progress.current = value;
   });
 
@@ -136,7 +144,7 @@ export function StackViews(props: StackViewsProps) {
             ready ? "opacity-100" : "opacity-0",
           )}
         >
-          {view === "stack" ? (
+          {!mounted ? null : view === "stack" ? (
             <ExplodedStackScene key="stack" {...sceneProps} />
           ) : (
             <ConstellationScene key="constellation" {...sceneProps} projects={projects} />
@@ -155,7 +163,7 @@ export function StackViews(props: StackViewsProps) {
                 <p className="mt-1 font-display text-2xl leading-tight font-medium">
                   {hoveredRow.label}
                 </p>
-                <p className="mt-1 font-mono text-xs text-muted">{usedInCount(hoveredRow.count)}</p>
+                <p className="mt-1 font-mono text-xs text-muted">{usedInCount[hoveredRow.count]}</p>
                 <ul className="mt-3 flex flex-wrap gap-1.5">
                   {projects
                     .filter((_, index) => hoveredRow.uses[index])
@@ -179,7 +187,7 @@ export function StackViews(props: StackViewsProps) {
       {/* Same data as text for assistive technology. */}
       <ul className="sr-only">
         {groups.flatMap((group) =>
-          group.rows.map((row) => <li key={row.label}>{labels.usedIn(row)}</li>),
+          group.rows.map((row) => <li key={row.label}>{labels.usedIn[row.label] ?? row.label}</li>),
         )}
       </ul>
     </div>

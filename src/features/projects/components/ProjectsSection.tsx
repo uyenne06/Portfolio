@@ -26,7 +26,7 @@ export function ProjectsSection({ projects, number }: ProjectsSectionProps) {
   );
 
   return (
-    <Section id="work" number={number} title={tSections("work")} note={<p>{t("intro")}</p>}>
+    <Section id="work" eager number={number} title={tSections("work")} note={<p>{t("intro")}</p>}>
       <HoverPreview previews={previews}>
         <ol className="border-t border-ink">
           {projects.map((project, index) => (

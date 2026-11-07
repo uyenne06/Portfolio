@@ -1,16 +1,20 @@
 "use client";
 
-import { motion, useScroll, useSpring } from "motion/react";
+import { useRef } from "react";
+
+import { useScrollProgress } from "@/shared/hooks";
 
 /** Thin pink reading-progress rule along the bottom of the masthead. */
 export function ScrollProgress() {
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, { stiffness: 200, damping: 40, restDelta: 0.001 });
+  const bar = useRef<HTMLDivElement>(null);
+  useScrollProgress(null, "contain", (value) => {
+    if (bar.current) bar.current.style.transform = `scaleX(${value})`;
+  });
   return (
-    <motion.div
+    <div
+      ref={bar}
       aria-hidden="true"
-      className="absolute inset-x-0 -bottom-px h-0.5 origin-left bg-accent-decor"
-      style={{ scaleX }}
+      className="absolute inset-x-0 -bottom-px h-0.5 origin-left scale-x-0 bg-accent-decor"
     />
   );
 }

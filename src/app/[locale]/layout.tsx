@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Be_Vietnam_Pro, JetBrains_Mono, Newsreader } from "next/font/google";
 import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
-import { getTranslations, setRequestLocale } from "next-intl/server";
+import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 
 import { siteConfig } from "@/config/site.config";
 import { routing } from "@/i18n/routing";
@@ -13,26 +13,44 @@ import { cn } from "@/shared/utils";
 
 import "@/styles/globals.css";
 
+/*
+ * Font loading: `subsets` only decides which files are *preloaded* — every subset's @font-face
+ * (including Vietnamese) is still declared and fetched on demand through `unicode-range`.
+ * Only the faces the first screen needs are preloaded; italics and mono load when used.
+ */
 const newsreader = Newsreader({
-  subsets: ["latin", "vietnamese"],
+  subsets: ["latin"],
   axes: ["opsz"],
-  style: ["normal", "italic"],
+  style: "normal",
   variable: "--font-newsreader",
   display: "swap",
 });
 
+const newsreaderItalic = Newsreader({
+  subsets: ["latin"],
+  axes: ["opsz"],
+  style: "italic",
+  variable: "--font-newsreader-italic",
+  display: "swap",
+  preload: false,
+});
+
 const beVietnamPro = Be_Vietnam_Pro({
-  subsets: ["latin", "vietnamese"],
+  subsets: ["latin"],
   weight: ["400", "500", "600"],
   variable: "--font-be-vietnam",
   display: "swap",
 });
 
 const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin", "vietnamese"],
+  subsets: ["latin"],
   variable: "--font-jetbrains",
   display: "swap",
+  preload: false,
 });
+
+/** Message namespaces read on the client — only the lazy RecentActivityFeed formats messages there. */
+const CLIENT_NAMESPACES = ["activity"] as const;
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -78,19 +96,30 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
   if (!hasLocale(routing.locales, locale)) notFound();
   setRequestLocale(locale);
 
-  const [{ data }, t] = await Promise.all([
+  const [{ data }, t, messages] = await Promise.all([
     getGitHubData(),
     getTranslations({ locale, namespace: "person" }),
+    getMessages({ locale }),
   ]);
+  // Only the namespaces client components read are serialised into the page; everything
+  // else is rendered on the server and never shipped as JSON.
+  const clientMessages = Object.fromEntries(
+    CLIENT_NAMESPACES.map((namespace) => [namespace, messages[namespace]]),
+  );
 
   return (
     <html
       lang={locale}
       suppressHydrationWarning
-      className={cn(newsreader.variable, beVietnamPro.variable, jetbrainsMono.variable)}
+      className={cn(
+        newsreader.variable,
+        newsreaderItalic.variable,
+        beVietnamPro.variable,
+        jetbrainsMono.variable,
+      )}
     >
       <body className="flex min-h-dvh flex-col">
-        <NextIntlClientProvider>
+        <NextIntlClientProvider messages={clientMessages}>
           <AppProviders>
             <SkipLink />
             <SiteHeader name={t("name")} />

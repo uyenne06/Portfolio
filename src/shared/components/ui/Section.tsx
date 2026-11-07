@@ -14,6 +14,11 @@ type SectionProps = {
   note?: ReactNode;
   /** Full-width body for large figures: the note becomes an intro row above the content. */
   wide?: boolean;
+  /**
+   * Render even while off-screen. Off by default: sections use `content-visibility: auto`,
+   * which also clips paint, so a section whose content overflows it (hover previews) opts out.
+   */
+  eager?: boolean;
   children: ReactNode;
   className?: string;
 };
@@ -22,10 +27,19 @@ type SectionProps = {
  * Editorial section: a full-width heading under a heavy rule, then a 12-column body with an
  * optional sticky marginal note (Tufte-style) and the content in the remaining nine columns.
  */
-export function Section({ id, title, number, note, wide, children, className }: SectionProps) {
+export function Section({
+  id,
+  title,
+  number,
+  note,
+  wide,
+  eager,
+  children,
+  className,
+}: SectionProps) {
   const headingId = `${id}-heading`;
   return (
-    <section id={id} aria-labelledby={headingId} className={cn("py-20 lg:py-32", className)}>
+    <section id={id} aria-labelledby={headingId} className={cn("py-20 lg:py-32", !eager && "defer-render", className)}>
       <Container>
         <header className="grid grid-cols-1 gap-x-10 gap-y-3 border-t-2 border-ink pt-5 lg:grid-cols-12">
           <p className="font-mono text-sm text-accent lg:col-span-3 lg:pt-3" aria-hidden="true">

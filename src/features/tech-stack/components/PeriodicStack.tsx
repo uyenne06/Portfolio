@@ -16,7 +16,8 @@ export type PeriodicStackProps = {
     filter: string;
     all: string;
     flip: string;
-    usedIn: (row: Row) => string;
+    /** Accessible "used in N of M projects: …" sentence per tool, keyed by tool label. */
+    usedIn: Record<string, string>;
     legend: string;
     legendSteps: string[];
   };
@@ -111,7 +112,7 @@ export function PeriodicStack({ projects, groups, labels }: PeriodicStackProps) 
                       tile={tile}
                       index={index}
                       state={!inProject ? "dim" : project !== null ? "lit" : "normal"}
-                      labels={{ usedIn: labels.usedIn(row), flip: labels.flip }}
+                      labels={{ usedIn: labels.usedIn[row.label] ?? row.label, flip: labels.flip }}
                       onHoverChange={setHovered}
                     />
                   );

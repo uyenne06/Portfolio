@@ -24,13 +24,24 @@ export function RevealOnView({ as: Tag = "div", id, className, children }: Revea
   useEffect(() => {
     const element = ref.current;
     if (!element) return;
-    if (element.getBoundingClientRect().top < window.innerHeight * 0.9) return;
 
-    // Hiding happens after mount for below-the-fold content only, so it never flashes.
-    setState("pending");
+    // The observer's first report says where the element starts, without forcing a
+    // synchronous layout during hydration (as reading its rect here would). Hiding happens
+    // after mount for below-the-fold content only, so it never flashes.
+    let first = true;
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry?.isIntersecting) {
+        if (!entry) return;
+        if (first) {
+          first = false;
+          if (entry.isIntersecting || entry.boundingClientRect.top < 0) {
+            observer.disconnect();
+            return;
+          }
+          setState("pending");
+          return;
+        }
+        if (entry.isIntersecting) {
           setState("done");
           observer.disconnect();
         }

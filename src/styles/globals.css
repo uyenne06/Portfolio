@@ -285,6 +285,66 @@
   transform: translateY(2rem) rotateX(-80deg);
 }
 
+/* Figures that fade up as they scroll into view (Reveal). */
+.fade-up {
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.fade-up[data-reveal="pending"] {
+  opacity: 0;
+  transform: translateY(1.5rem);
+}
+
+/* Route transition (PageTransition): the curtain lifts while the new page fades up. */
+.page-curtain {
+  transform: scaleY(0);
+  animation: curtain-lift 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.page-enter {
+  animation: page-enter 0.6s 0.25s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes curtain-lift {
+  from {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(1.5rem);
+  }
+}
+
+/* Button label that slides up when it changes (Copy → Copied). */
+.label-swap {
+  animation: label-swap 0.18s ease-out;
+}
+
+@keyframes label-swap {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+}
+
+/* Italic display type comes from its own (non-preloaded) Newsreader face. */
+.font-display .italic,
+.font-display.italic {
+  font-family: var(--font-newsreader-italic), ui-serif, Georgia, serif;
+}
+
+/* Below-the-fold sections skip style, layout and paint until they near the viewport.
+   `auto` remembers the real height once rendered, so scrolling back does not jump. */
+@utility defer-render {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 60rem;
+}
+
 /* Outlined display type for the kinetic stack band. */
 @utility text-outline {
   color: transparent;

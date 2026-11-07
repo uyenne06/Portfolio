@@ -2,14 +2,13 @@
 
 import type { ReactNode } from "react";
 
-import { QueryProvider } from "./QueryProvider";
 import { ThemeProvider } from "./ThemeProvider";
 
-/** All client-side providers in one place. i18n is provided by NextIntlClientProvider in the layout. */
+/**
+ * App-wide client providers. i18n is provided by NextIntlClientProvider in the layout; the
+ * TanStack Query provider wraps only the one client-fetched island (RecentActivityFeed), so
+ * the query library is not part of the first load.
+ */
 export function AppProviders({ children }: { children: ReactNode }) {
-  return (
-    <ThemeProvider>
-      <QueryProvider>{children}</QueryProvider>
-    </ThemeProvider>
-  );
+  return <ThemeProvider>{children}</ThemeProvider>;
 }

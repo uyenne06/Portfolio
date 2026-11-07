@@ -1,5 +1,3 @@
-"use client";
-
 import { useTranslations } from "next-intl";
 
 import type { TechMatrix } from "../types";
@@ -11,7 +9,10 @@ type TechStackFigureProps = {
   projectLabels: Record<string, string>;
 };
 
-/** Client wrapper that supplies formatted (ICU) labels to the Methods figure. */
+/**
+ * Formats every label of the Methods figure on the server (ICU plurals included), so the
+ * client figure receives plain strings and ships no message formatter.
+ */
 export function TechStackFigure({ matrix, projectLabels }: TechStackFigureProps) {
   const t = useTranslations("techStack");
   const total = matrix.columns.length;
@@ -31,16 +32,22 @@ export function TechStackFigure({ matrix, projectLabels }: TechStackFigureProps)
         flip: t("flipHint"),
         legend: t("legend"),
         legendSteps: [t("legend5"), t("legend4"), t("legend3"), t("legend2"), t("legend1")],
-        usedIn: (row) =>
-          t("usage", {
-            tool: row.label,
-            count: row.count,
-            total,
-            projects: matrix.columns
-              .filter((_, index) => row.uses[index])
-              .map(name)
-              .join(", "),
-          }),
+        usedIn: Object.fromEntries(
+          matrix.groups.flatMap(({ rows }) =>
+            rows.map((row) => [
+              row.label,
+              t("usage", {
+                tool: row.label,
+                count: row.count,
+                total,
+                projects: matrix.columns
+                  .filter((_, index) => row.uses[index])
+                  .map(name)
+                  .join(", "),
+              }),
+            ]),
+          ),
+        ),
       }}
       viewLabels={{
         group: t("viewGroup"),
@@ -48,7 +55,12 @@ export function TechStackFigure({ matrix, projectLabels }: TechStackFigureProps)
         constellation: t("viewConstellation"),
       }}
       hint={{ stack: t("hintStack"), constellation: t("hintConstellation") }}
-      usedInCount={(count) => t("usedInCount", { count, total })}
+      usedInCount={Object.fromEntries(
+        Array.from({ length: total }, (_, index) => [
+          index + 1,
+          t("usedInCount", { count: index + 1, total }),
+        ]),
+      )}
       sceneLabel={t("sceneLabel", { total })}
     />
   );
