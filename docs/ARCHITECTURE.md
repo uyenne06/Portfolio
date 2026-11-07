@@ -104,14 +104,24 @@ server-rendered title block to `shared/components/three/HeroExperience` (client)
   shadows; `prefers-reduced-motion` (CSS `motion-reduce:` + JS) collapses the hero to a static
   title plus `WorkRidgesStill` (the same data as SVG).
 
-## Fig. 2 — the periodic table of the stack
+## Fig. 2 — two 3D readings of the stack
 
 `features/tech-stack` derives a tool × project matrix from the dependency manifests
-(`deriveTechMatrix`). `PeriodicStack` lays each layer out as a block of "elements"
-(`ElementTile`): two-letter symbols come from `shared/lib/tech-catalog.ts`, the atomic number is
-the usage rank, and the shading (solid → soft → hatched → outline → dashed) encodes how many
-projects use the tool. Tiles tilt toward the cursor with a glare, flip to list their projects, and
-cross-highlight with the project chips.
+(`deriveTechMatrix`). `StackViews` (client) shows it two ways, switchable, both lazy-loaded
+WebGL scenes driven by the figure's scroll progress and paused off-screen:
+
+- **Exploded stack** (`three/ExplodedStackScene`): one translucent slab per layer; each tool is
+  a tower whose height is the number of projects using it, drawn as an axonometric line drawing
+  (flat fills, ink edges, pink for the most-used tools). Scrolling separates the slabs and orbits
+  the camera.
+- **Constellation** (`three/ConstellationScene`): projects are pink stars on a ring; tools used by
+  three or more projects form a core sphere, two-project tools sit between their projects, and
+  single-project tools orbit theirs. Threads link each tool to its projects. Drag to rotate
+  (OrbitControls, desktop only — touch gets an automatic spin so page scrolling is never blocked).
+
+Both share the project chips (select a project to light its tools), a reading panel for the hovered
+tool, and an `sr-only` text list. Positions come from pure functions in `three/layout.ts`.
+Reduced motion falls back to `PeriodicStack`, a static periodic-table view of the same data.
 
 ## Hero interactions
 
