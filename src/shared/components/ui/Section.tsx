@@ -41,12 +41,19 @@ export function Section({
   return (
     <section id={id} aria-labelledby={headingId} className={cn("py-20 lg:py-32", !eager && "defer-render", className)}>
       <Container>
-        <header className="grid grid-cols-1 gap-x-10 gap-y-3 border-t-2 border-ink pt-5 lg:grid-cols-12">
-          <p className="font-mono text-sm text-accent lg:col-span-3 lg:pt-3" aria-hidden="true">
+        {/* Entrance (globals.css, "Section entrances"): the heavy rule draws across, the §
+            number slides in, the title words rise, then the note and body fade up in turn. */}
+        <RevealOnView
+          as="header"
+          className="section-head grid grid-cols-1 gap-x-10 gap-y-3 pt-5 lg:grid-cols-12"
+        >
+          <p
+            className="section-number font-mono text-sm text-accent lg:col-span-3 lg:pt-3"
+            aria-hidden="true"
+          >
             {number ? `§ ${number}` : "§"}
           </p>
-          <RevealOnView
-            as="h2"
+          <h2
             id={headingId}
             className="font-display text-section font-medium text-balance lg:col-span-9"
           >
@@ -58,10 +65,10 @@ export function Section({
                 {index < words.length - 1 ? " " : null}
               </span>
             ))}
-          </RevealOnView>
-        </header>
+          </h2>
+        </RevealOnView>
 
-        <div className="mt-10 grid grid-cols-1 gap-x-10 gap-y-8 lg:mt-16 lg:grid-cols-12">
+        <RevealOnView className="section-body mt-10 grid grid-cols-1 gap-x-10 gap-y-8 lg:mt-16 lg:grid-cols-12">
           {note ? (
             <aside className={wide ? "lg:col-span-6 lg:col-start-4" : "lg:col-span-3"}>
               <div
@@ -74,7 +81,7 @@ export function Section({
           <div className={cn("min-w-0", wide ? "lg:col-span-12" : "lg:col-span-9 lg:col-start-4")}>
             {children}
           </div>
-        </div>
+        </RevealOnView>
       </Container>
     </section>
   );

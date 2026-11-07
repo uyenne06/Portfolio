@@ -41,12 +41,16 @@ export function RevealOnView({ as: Tag = "div", id, className, children }: Revea
           setState("pending");
           return;
         }
-        if (entry.isIntersecting) {
+        // Also reveal when it was scrolled past between two reports (fast scroll, a jump to
+        // an anchor), so content is never left hidden above the viewport.
+        if (entry.isIntersecting || entry.boundingClientRect.top < 0) {
           setState("done");
           observer.disconnect();
         }
       },
-      { rootMargin: "0px 0px -12% 0px" },
+      // The root extends far above the viewport: an element counts as seen once it has
+      // entered from below, even if a fast scroll or an anchor jump carried it straight past.
+      { rootMargin: "100000px 0px -12% 0px" },
     );
     observer.observe(element);
     return () => observer.disconnect();

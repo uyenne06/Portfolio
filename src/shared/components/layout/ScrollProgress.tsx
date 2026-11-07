@@ -10,11 +10,14 @@ export function ScrollProgress() {
   useScrollProgress(null, "contain", (value) => {
     if (bar.current) bar.current.style.transform = `scaleX(${value})`;
   });
+  // Width comes from `transform` alone (Tailwind's scale-* utilities use the separate `scale`
+  // property, which would multiply with it and keep the bar at zero).
   return (
     <div
       ref={bar}
       aria-hidden="true"
-      className="absolute inset-x-0 -bottom-px h-0.5 origin-left scale-x-0 bg-accent-decor"
+      style={{ transform: "scaleX(0)" }}
+      className="absolute inset-x-0 -bottom-px h-0.5 origin-left bg-accent-decor"
     />
   );
 }
