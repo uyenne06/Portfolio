@@ -43,6 +43,26 @@ function useVelocitySkew(bandRef: RefObject<HTMLDivElement | null>, enabled: boo
 }
 
 /**
+ * Eight-spoked asterisk separator. Drawn as SVG rather than the "✳" character, which phones
+ * render as a green emoji tile instead of a pink glyph.
+ */
+function Asterisk() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+      className="size-[0.6em] shrink-0 text-accent-decor"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2.6}
+      strokeLinecap="round"
+    >
+      <path d="M12 2v20M2 12h20M4.9 4.9l14.2 14.2M19.1 4.9 4.9 19.1" />
+    </svg>
+  );
+}
+
+/**
  * Kinetic band of the tools used most across the featured projects. It drifts on its own and
  * leans with scroll velocity. Decorative (aria-hidden): the same data is in the matrix below.
  */
@@ -65,7 +85,7 @@ export function StackMarquee({ items }: { items: string[] }) {
               )}
             >
               {item}
-              <span className="text-accent-decor">✳</span>
+              <Asterisk />
             </span>
           ))}
         </div>
