@@ -4,7 +4,7 @@ import { useRef } from "react";
 
 import { useScrollProgress } from "@/shared/hooks";
 
-/** Thin pink reading-progress rule along the bottom of the masthead. */
+/** Pink reading-progress rule along the top edge of the masthead. */
 export function ScrollProgress() {
   const bar = useRef<HTMLDivElement>(null);
   useScrollProgress(null, "contain", (value) => {
@@ -17,7 +17,7 @@ export function ScrollProgress() {
       ref={bar}
       aria-hidden="true"
       style={{ transform: "scaleX(0)" }}
-      className="absolute inset-x-0 -bottom-px h-0.5 origin-left bg-accent-decor"
+      className="absolute inset-x-0 top-0 z-10 h-1 origin-left bg-accent-decor"
     />
   );
 }

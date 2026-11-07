@@ -3,6 +3,7 @@ import type { CSSProperties, ReactNode } from "react";
 import { cn } from "@/shared/utils";
 
 import { Container } from "./Container";
+import { RevealBlocks } from "./RevealBlocks";
 import { RevealOnView } from "./RevealOnView";
 
 type SectionProps = {
@@ -14,11 +15,6 @@ type SectionProps = {
   note?: ReactNode;
   /** Full-width body for large figures: the note becomes an intro row above the content. */
   wide?: boolean;
-  /**
-   * Render even while off-screen. Off by default: sections use `content-visibility: auto`,
-   * which also clips paint, so a section whose content overflows it (hover previews) opts out.
-   */
-  eager?: boolean;
   children: ReactNode;
   className?: string;
 };
@@ -33,16 +29,16 @@ export function Section({
   number,
   note,
   wide,
-  eager,
   children,
   className,
 }: SectionProps) {
   const headingId = `${id}-heading`;
   return (
-    <section id={id} aria-labelledby={headingId} className={cn("py-20 lg:py-32", !eager && "defer-render", className)}>
+    <section id={id} aria-labelledby={headingId} className={cn("py-20 lg:py-32", className)}>
       <Container>
         {/* Entrance (globals.css, "Section entrances"): the heavy rule draws across, the §
-            number slides in, the title words rise, then the note and body fade up in turn. */}
+            number slides in, the title words rise; then every block of the body enters as it
+            scrolls into view (RevealBlocks). */}
         <RevealOnView
           as="header"
           className="section-head grid grid-cols-1 gap-x-10 gap-y-3 pt-5 lg:grid-cols-12"
@@ -68,7 +64,7 @@ export function Section({
           </h2>
         </RevealOnView>
 
-        <RevealOnView className="section-body mt-10 grid grid-cols-1 gap-x-10 gap-y-8 lg:mt-16 lg:grid-cols-12">
+        <RevealBlocks className="mt-10 grid grid-cols-1 gap-x-10 gap-y-8 lg:mt-16 lg:grid-cols-12">
           {note ? (
             <aside className={wide ? "lg:col-span-6 lg:col-start-4" : "lg:col-span-3"}>
               <div
@@ -81,7 +77,7 @@ export function Section({
           <div className={cn("min-w-0", wide ? "lg:col-span-12" : "lg:col-span-9 lg:col-start-4")}>
             {children}
           </div>
-        </RevealOnView>
+        </RevealBlocks>
       </Container>
     </section>
   );

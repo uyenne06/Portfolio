@@ -102,6 +102,34 @@
     }
   }
 
+  /* Pink scrollbars: a rounded pill on the paper in Chromium and Safari, the same colours in
+     Firefox (which only supports scrollbar-color). */
+  ::-webkit-scrollbar {
+    width: 0.75rem;
+    height: 0.75rem;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: var(--paper);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--accent-decor);
+    border: 0.1875rem solid var(--paper);
+    border-radius: 999rem;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: var(--accent);
+  }
+
+  @supports (-moz-appearance: none) {
+    html {
+      scrollbar-color: var(--accent-decor) var(--paper);
+      scrollbar-width: thin;
+    }
+  }
+
   body {
     background-color: var(--paper);
     color: var(--ink);
@@ -210,8 +238,8 @@
   transform: translateY(140%);
 }
 
-/* Section entrances: the heavy rule draws left → right, the § number slides in, the title
-   words rise (above), then the marginal note and the body fade up out of a soft blur. */
+/* Section entrances: the heavy rule draws left → right, the § number slides in and the title
+   words rise (above). The body's blocks follow one by one (RevealBlocks, below). */
 .section-head {
   position: relative;
 }
@@ -248,21 +276,28 @@
   letter-spacing: 0.6em;
 }
 
-.section-body > * {
+/* Block entrances (RevealBlocks): text rises out of a soft blur, list items slide in from
+   the left, figures and tables settle from a slight zoom — each as it scrolls into view. */
+[data-block] {
   transition:
-    opacity 1s var(--ease-paper),
+    opacity 0.9s var(--ease-paper),
     transform 1s var(--ease-paper),
-    filter 1s var(--ease-paper);
+    filter 0.9s var(--ease-paper);
+  transition-delay: var(--block-delay, 0ms);
 }
 
-.section-body > :nth-child(2) {
-  transition-delay: 0.18s;
-}
-
-[data-reveal="pending"].section-body > * {
+[data-block="pending"] {
   opacity: 0;
-  transform: translateY(2.5rem);
-  filter: blur(0.5rem);
+  transform: translateY(2rem);
+  filter: blur(0.375rem);
+}
+
+li[data-block="pending"] {
+  transform: translateX(-2.5rem);
+}
+
+:is(figure, table, dl)[data-block="pending"] {
+  transform: translateY(2rem) scale(0.96);
 }
 
 /* Images: a curtain opens upward. */
@@ -391,13 +426,6 @@
 .font-display .italic,
 .font-display.italic {
   font-family: var(--font-newsreader-italic), ui-serif, Georgia, serif;
-}
-
-/* Below-the-fold sections skip style, layout and paint until they near the viewport.
-   `auto` remembers the real height once rendered, so scrolling back does not jump. */
-@utility defer-render {
-  content-visibility: auto;
-  contain-intrinsic-size: auto 60rem;
 }
 
 /* Outlined display type for the kinetic stack band. */
