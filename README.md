@@ -4,8 +4,11 @@ A frontend developer's portfolio written like a research preprint: numbered sect
 bracketed citation `[n]` on every fact. Nothing is typed in by hand — profile, commits, projects and
 stack are read from the GitHub API, and each claim links back to the repository or file it came from.
 
-**Live site:** _coming soon (Vercel)_ · **Languages:** English (`/en`) · Tiếng Việt (`/vi`) ·
-**Themes:** light / dark / system
+### 🌐 Live: [hoanguyen-portfolio.vercel.app](https://hoanguyen-portfolio.vercel.app)
+
+**Languages:** [English](https://hoanguyen-portfolio.vercel.app/en) ·
+[Tiếng Việt](https://hoanguyen-portfolio.vercel.app/vi) · **Themes:** light / dark / system ·
+**Hosting:** Vercel (auto-deploys from `main`)
 
 ![Hero — the title page, with every commit floating as a 3D sheet of paper](docs/screenshots/hero.jpg)
 
