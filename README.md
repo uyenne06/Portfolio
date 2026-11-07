@@ -15,7 +15,7 @@
 [![Last commit](https://img.shields.io/github/last-commit/uyenne06/Portfolio?style=flat-square&color=a04d6e)](https://github.com/uyenne06/Portfolio/commits/main)
 [![Repo size](https://img.shields.io/github/repo-size/uyenne06/Portfolio?style=flat-square&color=a04d6e)](https://github.com/uyenne06/Portfolio)
 
-#### 🌐 Live: [hoanguyen-portfolio.vercel.app](https://hoanguyen-portfolio.vercel.app)
+##### 🌐 Live: [hoanguyen-portfolio.vercel.app](https://hoanguyen-portfolio.vercel.app)
 
 A frontend developer's portfolio written like a research preprint: numbered sections, figures, and a
 bracketed citation `[n]` on every fact. Nothing is typed in by hand — profile, commits, projects and
