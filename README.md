@@ -1,5 +1,22 @@
 # Portfolio — Nguyen Huynh Hoang Uyen
 
+[![Next.js](https://img.shields.io/badge/Next.js-16-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)](https://nextjs.org)
+[![React](https://img.shields.io/badge/React-19-149ECA?style=for-the-badge&logo=react&logoColor=white)](https://react.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
+[![three.js](https://img.shields.io/badge/three.js-R3F-000000?style=for-the-badge&logo=threedotjs&logoColor=white)](https://r3f.docs.pmnd.rs)
+[![next-intl](https://img.shields.io/badge/i18n-EN_·_VI-a04d6e?style=for-the-badge)](https://next-intl.dev)
+
+[![Live](https://img.shields.io/badge/Live-hoanguyen--portfolio.vercel.app-e8a0bf?style=flat-square&logo=vercel&logoColor=white)](https://hoanguyen-portfolio.vercel.app)
+[![Deployed on Vercel](https://img.shields.io/badge/Deployed_on-Vercel-000000?style=flat-square&logo=vercel&logoColor=white)](https://vercel.com)
+[![Data: GitHub API](https://img.shields.io/badge/Data-GitHub_API-181717?style=flat-square&logo=github&logoColor=white)](https://docs.github.com/en/graphql)
+[![Accessibility 100](https://img.shields.io/badge/Lighthouse_Accessibility-100-e8a0bf?style=flat-square&logo=lighthouse&logoColor=white)](#highlights)
+[![SEO 100](https://img.shields.io/badge/Lighthouse_SEO-100-e8a0bf?style=flat-square&logo=lighthouse&logoColor=white)](#highlights)
+[![Last commit](https://img.shields.io/github/last-commit/uyenne06/Portfolio?style=flat-square&color=a04d6e)](https://github.com/uyenne06/Portfolio/commits/main)
+[![Repo size](https://img.shields.io/github/repo-size/uyenne06/Portfolio?style=flat-square&color=a04d6e)](https://github.com/uyenne06/Portfolio)
+
+### 🌐 Live: [hoanguyen-portfolio.vercel.app](https://hoanguyen-portfolio.vercel.app)
+
 A frontend developer's portfolio written like a research preprint: numbered sections, figures, and a
 bracketed citation `[n]` on every fact. Nothing is typed in by hand — profile, commits, projects and
 stack are read from the GitHub API, and each claim links back to the repository or file it came from.
