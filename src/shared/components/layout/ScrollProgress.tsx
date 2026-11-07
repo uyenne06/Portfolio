@@ -17,7 +17,7 @@ export function ScrollProgress() {
       ref={bar}
       aria-hidden="true"
       style={{ transform: "scaleX(0)" }}
-      className="absolute inset-x-0 top-0 z-10 h-1 origin-left bg-accent-decor"
+      className="absolute inset-x-0 top-0 z-10 h-0.5 origin-left bg-accent-decor"
     />
   );
 }
