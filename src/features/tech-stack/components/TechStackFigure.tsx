@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl";
 
 import type { TechMatrix } from "../types";
-import { PeriodicStack } from "./PeriodicStack";
+import { StackViews } from "./StackViews";
 
 type TechStackFigureProps = {
   matrix: TechMatrix;
@@ -11,14 +11,14 @@ type TechStackFigureProps = {
   projectLabels: Record<string, string>;
 };
 
-/** Client wrapper that supplies formatted (ICU) labels to the periodic table. */
+/** Client wrapper that supplies formatted (ICU) labels to the Methods figure. */
 export function TechStackFigure({ matrix, projectLabels }: TechStackFigureProps) {
   const t = useTranslations("techStack");
   const total = matrix.columns.length;
   const name = (slug: string) => projectLabels[slug] ?? slug;
 
   return (
-    <PeriodicStack
+    <StackViews
       projects={matrix.columns.map((slug) => ({ id: slug, label: name(slug) }))}
       groups={matrix.groups.map(({ group, rows }) => ({
         id: group,
@@ -42,6 +42,14 @@ export function TechStackFigure({ matrix, projectLabels }: TechStackFigureProps)
               .join(", "),
           }),
       }}
+      viewLabels={{
+        group: t("viewGroup"),
+        stack: t("viewStack"),
+        constellation: t("viewConstellation"),
+      }}
+      hint={{ stack: t("hintStack"), constellation: t("hintConstellation") }}
+      usedInCount={(count) => t("usedInCount", { count, total })}
+      sceneLabel={t("sceneLabel", { total })}
     />
   );
 }

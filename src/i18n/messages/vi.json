@@ -80,7 +80,7 @@
   "techStack": {
     "intro": "Công nghệ được đếm, không tự khai: một công cụ chỉ xuất hiện khi dự án khai báo nó trong file phụ thuộc (package.json, pom.xml) hoặc dùng nó làm ngôn ngữ của repository. Tổng cộng {total} dự án.",
     "tableLabel": "Hình 2",
-    "tableCaption": "Bảng tuần hoàn stack của tôi. Mỗi tầng là một khối; số hiệu là thứ hạng theo mức độ sử dụng, phân số ở góc và cách tô cho biết bao nhiêu dự án dùng công cụ đó. Chọn một ô để lật; chọn một dự án để làm sáng stack của nó.",
+    "tableCaption": "Hai cách đọc cùng một dữ liệu — mọi công cụ tìm thấy trong file phụ thuộc của các dự án. Stack tách lớp: tháp càng cao, càng nhiều dự án dùng. Chòm sao: công cụ nằm giữa các dự án dùng nó.",
     "groups": {
       "frontend": "Frontend",
       "styling": "Giao diện & styling",
@@ -97,7 +97,14 @@
     "legend4": "4",
     "legend3": "3",
     "legend2": "2",
-    "legend1": "1 dự án"
+    "legend1": "1 dự án",
+    "viewGroup": "Kiểu hiển thị",
+    "viewStack": "Stack tách lớp",
+    "viewConstellation": "Chòm sao",
+    "hintStack": "Mỗi tấm là một tầng của stack; mỗi tòa tháp là một công cụ, cao theo số dự án dùng nó. Trỏ vào một tháp, hoặc chọn một dự án.",
+    "hintConstellation": "Các dự án là ngôi sao hồng; mỗi công cụ nằm giữa các dự án dùng nó. Kéo để xoay, trỏ vào một công cụ để thấy các sợi nối.",
+    "usedInCount": "Dùng trong {count} / {total} dự án",
+    "sceneLabel": "Hình 3D các công cụ dùng trong {total} dự án, chia theo tầng. Dữ liệu tương tự được liệt kê dạng chữ bên dưới."
   },
   "projects": {
     "intro": "Các dự án tôi có commit, sắp xếp theo số commit của tôi trên nhánh mặc định của từng repository.",

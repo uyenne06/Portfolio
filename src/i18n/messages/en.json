@@ -80,7 +80,7 @@
   "techStack": {
     "intro": "Technologies are counted, not claimed: a tool appears when a project declares it in its dependency manifest (package.json, pom.xml) or uses it as a repository language. {total} projects in total.",
     "tableLabel": "Fig. 2",
-    "tableCaption": "The periodic table of my stack. Each layer is a block; the atomic number is a tool's rank by usage, the corner fraction and the shading show how many of the projects use it. Select an element to flip it; pick a project to light up its stack.",
+    "tableCaption": "Two readings of the same data — every tool found in the projects' dependency manifests. Exploded stack: towers grow with the number of projects using a tool. Constellation: tools sit between the projects that use them.",
     "groups": {
       "frontend": "Frontend",
       "styling": "Styling & UI",
@@ -97,7 +97,14 @@
     "legend4": "4",
     "legend3": "3",
     "legend2": "2",
-    "legend1": "1 project"
+    "legend1": "1 project",
+    "viewGroup": "Figure view",
+    "viewStack": "Exploded stack",
+    "viewConstellation": "Constellation",
+    "hintStack": "Each slab is a layer of the stack; each tower is a tool, as tall as the number of projects using it. Point at a tower, or pick a project.",
+    "hintConstellation": "Projects are the pink stars; each tool hangs between the projects that use it. Drag to turn it, point at a tool to follow its threads.",
+    "usedInCount": "Used in {count} of {total} projects",
+    "sceneLabel": "3D figure of the tools used across {total} projects, grouped by layer. The same data is listed as text below."
   },
   "projects": {
     "intro": "Projects I have committed to, ordered by the number of my commits on each repository's default branch.",
