@@ -50,9 +50,9 @@ pull requests, languages and stack.
 
 ![Selected work with the hover preview](docs/screenshots/selected-work.jpg)
 
-**Results and References.** A contribution calendar, language share, live "latest activity" (fetched
-client-side through a server route so the token never reaches the browser), and a citation index
-that counts where each source is cited and jumps back to it.
+**Results and References.** A contribution calendar, language share, and a citation index that
+counts where each source is cited and jumps back to it. Visitors never trigger a GitHub request:
+data is read at build time and refreshed at most once an hour.
 
 **Built to a quality floor.** Every animation has a `prefers-reduced-motion` fallback (static SVG /
 static table); 3D scenes are lazy-loaded, paused off-screen and lighter on low-power devices;
@@ -67,7 +67,7 @@ focus, ARIA labels and text alternatives for every figure.
 | Language    | TypeScript (strict)                                                              |
 | Styling     | Tailwind CSS v4 (design tokens as CSS variables) · next-themes                   |
 | 3D & motion | three.js · React Three Fiber · drei · Motion                                     |
-| Data        | GitHub GraphQL + REST · Zod validation · TanStack Query (client-side only)       |
+| Data        | GitHub GraphQL + REST · Zod validation · Cache Components (hourly)               |
 | i18n        | next-intl (locale-prefixed routes, typed message keys)                           |
 | Quality     | ESLint · Prettier (+ Tailwind plugin) · Playwright (screenshots)                 |
 

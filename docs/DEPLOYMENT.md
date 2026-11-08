@@ -51,16 +51,16 @@ Add them in the import screen (or later in **Project → Settings → Environmen
 - **After changing an environment variable:** **Deployments → ⋯ on the latest → Redeploy**
   (variables apply only to new builds).
 - **Data refresh:** pages are prerendered and revalidated at most once an hour
-  (`cacheLife('hours')`); "Latest public activity" every minute. To refresh the committed fallback,
-  run `npm run sync:github` locally and push.
+  (`cacheLife('hours')`). To refresh the committed fallback, run `npm run sync:github` locally
+  and push.
 - **Custom domain (optional):** **Project → Settings → Domains → Add**, follow the DNS
   instructions, then set `NEXT_PUBLIC_SITE_URL` and redeploy.
 
 ## 5. Security notes
 
-- **What runs on a server:** Next.js server rendering, the locale proxy and
-  `/api/github/recent`. All pages and that route are prerendered and served from Vercel's CDN, so
-  a flood of requests hits cached files, not GitHub or a function each time.
+- **What runs on a server:** Next.js server rendering and the locale proxy. There is no API
+  route; every page is prerendered and served from Vercel's CDN, so a flood of requests hits
+  cached files, never GitHub — at most one GitHub refresh per hour, whatever the traffic.
 - **Secrets:** only `GITHUB_TOKEN`, read-only, scoped to public repositories, with an expiry.
 - **Headers:** `next.config.ts` sets anti-clickjacking (`frame-ancestors 'none'`,
   `X-Frame-Options`), `nosniff`, a strict referrer policy and a restrictive `Permissions-Policy`.
@@ -76,7 +76,6 @@ Add them in the import screen (or later in **Project → Settings → Environmen
 | Site shows "Snapshot data from …" in Results | `GITHUB_TOKEN` missing, expired or wrong → update it and redeploy             |
 | Build log: `GitHub GraphQL responded 401`    | Token expired/revoked; the build still succeeds from the snapshot — rotate it |
 | Build log: GraphQL `rate limit` errors       | Too many builds in an hour; wait or rely on the snapshot (build won't fail)   |
-| "Latest public activity" is empty            | Public events API rate-limited without a token → add `GITHUB_TOKEN`           |
 | Wrong URLs in sitemap / Open Graph           | Set `NEXT_PUBLIC_SITE_URL` to the real domain and redeploy                    |
 | Build fails on type or lint errors           | Run `npm run typecheck && npm run lint && npm run build` locally, fix, push   |
 | Push to `main` did not deploy                | Vercel GitHub App lacks access to the repo → Adjust GitHub App Permissions    |

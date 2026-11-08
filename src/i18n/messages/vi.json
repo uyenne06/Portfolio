@@ -247,16 +247,6 @@
     "calendarCell": "{date}: {count, plural, =0 {không có đóng góp} other {# đóng góp}}",
     "less": "Ít",
     "more": "Nhiều",
-    "recentTitle": "Hoạt động công khai gần đây",
-    "recentLoading": "Đang tải hoạt động gần đây…",
-    "recentEmpty": "Chưa có hoạt động công khai gần đây.",
-    "recentError": "Hiện chưa tải được hoạt động gần đây.",
-    "event": {
-      "PushEvent": "Đẩy {count} commit lên {repo}",
-      "PushEventNoCount": "Đẩy code lên {repo}",
-      "PullRequestEvent": "Pull request ({detail}) trong {repo}",
-      "CreateEvent": "Tạo {detail} trong {repo}"
-    },
     "sourceLive": "Dữ liệu trực tiếp, làm mới mỗi giờ. Lần lấy gần nhất: {date}.",
     "sourceSnapshot": "Dữ liệu snapshot ngày {date}.",
     "otherLanguages": "Khác"

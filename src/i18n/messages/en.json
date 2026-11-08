@@ -247,16 +247,6 @@
     "calendarCell": "{date}: {count, plural, =0 {no contributions} one {# contribution} other {# contributions}}",
     "less": "Less",
     "more": "More",
-    "recentTitle": "Latest public activity",
-    "recentLoading": "Loading recent activity…",
-    "recentEmpty": "No recent public activity to show.",
-    "recentError": "Recent activity is unavailable right now.",
-    "event": {
-      "PushEvent": "Pushed {count, plural, one {# commit} other {# commits}} to {repo}",
-      "PushEventNoCount": "Pushed to {repo}",
-      "PullRequestEvent": "Pull request {detail} in {repo}",
-      "CreateEvent": "Created {detail} in {repo}"
-    },
     "sourceLive": "Live data, refreshed hourly. Last fetched {date}.",
     "sourceSnapshot": "Snapshot data from {date}.",
     "otherLanguages": "Other"

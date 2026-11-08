@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Be_Vietnam_Pro, JetBrains_Mono, Newsreader } from "next/font/google";
 import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
-import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import { siteConfig } from "@/config/site.config";
 import { routing } from "@/i18n/routing";
@@ -49,8 +49,6 @@ const jetbrainsMono = JetBrains_Mono({
   preload: false,
 });
 
-/** Message namespaces read on the client — only the lazy RecentActivityFeed formats messages there. */
-const CLIENT_NAMESPACES = ["activity"] as const;
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -96,16 +94,10 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
   if (!hasLocale(routing.locales, locale)) notFound();
   setRequestLocale(locale);
 
-  const [{ data }, t, messages] = await Promise.all([
+  const [{ data }, t] = await Promise.all([
     getGitHubData(),
     getTranslations({ locale, namespace: "person" }),
-    getMessages({ locale }),
   ]);
-  // Only the namespaces client components read are serialised into the page; everything
-  // else is rendered on the server and never shipped as JSON.
-  const clientMessages = Object.fromEntries(
-    CLIENT_NAMESPACES.map((namespace) => [namespace, messages[namespace]]),
-  );
 
   return (
     <html
@@ -119,7 +111,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
       )}
     >
       <body className="flex min-h-dvh flex-col">
-        <NextIntlClientProvider messages={clientMessages}>
+        <NextIntlClientProvider messages={null}>
           <AppProviders>
             <SkipLink />
             <SiteHeader name={t("name")} />

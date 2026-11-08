@@ -5,7 +5,6 @@ import { Cite, CountUp, Figure, Reveal, Section } from "@/shared/components/ui";
 import type { ActivityStats, ActivitySummary } from "../types";
 import { ContributionHeatmap } from "./ContributionHeatmap";
 import { LanguageBar } from "./LanguageBar";
-import { RecentActivity } from "./RecentActivity";
 
 const STAT_KEYS = [
   "contributions",
@@ -69,22 +68,19 @@ export function ActivitySection({ summary, number }: ActivitySectionProps) {
           </Figure>
         </Reveal>
 
-        <div className="grid grid-cols-1 gap-16 lg:grid-cols-2 lg:gap-10">
-          <Reveal className="min-w-0">
-            <Figure
-              label={t("languagesLabel")}
-              caption={
-                <>
-                  {t("languagesCaption")}
-                  <Cite ids={["github-profile"]} />
-                </>
-              }
-            >
-              <LanguageBar languages={summary.languages} />
-            </Figure>
-          </Reveal>
-          <RecentActivity title={t("recentTitle")} loading={t("recentLoading")} />
-        </div>
+        <Reveal className="min-w-0">
+          <Figure
+            label={t("languagesLabel")}
+            caption={
+              <>
+                {t("languagesCaption")}
+                <Cite ids={["github-profile"]} />
+              </>
+            }
+          >
+            <LanguageBar languages={summary.languages} />
+          </Figure>
+        </Reveal>
       </div>
 
       <p className="mt-12 font-mono text-xs text-muted">
